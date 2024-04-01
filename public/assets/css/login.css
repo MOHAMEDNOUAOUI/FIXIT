@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+	--roboto: Roboto;
+    --inter : inter;
+    --dark : black;
+    --purple : #8400EF;
+    --gradient-purple: linear-gradient(90deg, rgba(141,0,255,1) 0%, rgba(75,0,137,1) 100%);
+}
+
+html {
+	overflow-x: hidden;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+
+#main {
+    width: 70%;
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#main .top {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#main .buttom {
+    width: 100%;
+    height: 29%;
+   background-image: url(../../assets/images/Rectangle\ 16.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logosection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: var(--inter);
+    color: white;
+}
+
+.logosection h2 {
+    font-weight: bold;
+    font-size: 1rem;
+
+}
+.logosection p {
+font-weight: light;
+font-size: 13px;
+}
+
+.logosection p span {
+    color: var(--purple);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+form input {
+    width: 17rem;
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 20px;
+    height: 2.6rem;
+    padding-left: 1rem;
+    color: white;
+}
+
+form button {
+    background-color: white;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    color: black;
+    font-family: var(--inter);
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+}
+
+.google {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--inter);
+    font-size: 14px;
+    font-weight:500;
+    background: rgb(141,0,255);
+    background: linear-gradient(90deg, rgba(141,0,255,1) 0%, rgba(75,0,137,1) 100%);
+    width: 20rem;
+    height: 2.5rem;
+    border-radius: 20px;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    body {
+        position: relative;
+    }
+
+    .background #first {
+        height: 10rem;
+        width: 20rem;
+        background-image: url(../../assets/images/Rectangle\ 15.png);
+        position: absolute;
+        top: -10px;
+        right: -170px;
+        rotate: 49deg;
+    }
+
+    .background #second {
+        height: 10rem;
+        width: 20rem;
+        background-image: url(../../assets/images/Rectangle\ 15.png);
+        position: absolute;
+        left: -240px;
+        top: 14rem;
+        rotate: 40deg;
+    }
+
+    .background #last {
+        height: 10rem;
+        width: 5rem;
+        bottom: 0px;
+        right: -10px;
+        background-image: url(../../assets/images/Rectangle\ 15.png);
+        position: absolute;
+        rotate: 40deg;
+    }
+
+
+    #main {
+        position: relative;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #main .top {
+        width: 150%;
+    }
+
+    #main .buttom {
+        display: none;
+    }
+}

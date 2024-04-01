@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap');
+
+
+
+@font-face {
+    font-family: Dx Slight;
+    src: url(../../font/dxslight-mediumultra-free-personal-use.otf);
+}
+
+@font-face {
+    font-family: against;
+    src: url(../../font/against\ regular.otf);
+}
+
+@font-face {
+    font-family: Brigends;
+    src: url(../../font/brigends-expanded-font-1705392758-0/brigendsexpanded-nrek1.otf);
+}
+
+@font-face {
+    font-family: MADE TOMMY;
+    src: url(../../font/MADE\ TOMMY\ Light_PERSONAL\ USE.otf);
+}
+
+@font-face {
+    font-family: netflix-bold;
+    src: url(../../font/NetflixSans-Bold.otf);
+}
+@font-face {
+    font-family: netflix-medium;
+    src: url(../../font/NetflixSans-Medium.otf);
+}
+@font-face {
+    font-family: netflix-regular;
+    src: url(../../font/NetflixSans-Regular.otf);
+}
+
+:root {
+	--roboto: Roboto;
+    --inter : inter;
+    --against: against;
+    --dark : black;
+    --purple : #8400EF;
+    --gradient-purple: linear-gradient(90deg, rgba(141,0,255,1) 0%, rgba(75,0,137,1) 100%);
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oxanium", sans-serif;
+}
+
+a,li {
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--dark);
+    font-family: "Oxanium", sans-serif;
+}
+
+
+#page1 {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#page1 .right {
+    height: 100%;
+    width: 70%;
+    background-image: url(../../images/1195012.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+/* #page1 .right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.797);
+} */
+
+
+
+#page1 .left {
+    width: 30%;
+    height: 100%;
+    background-color: black;
+}
+
+#page1 nav {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    backdrop-filter: blur(4px);
+}
+
+#page1 .logo {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    transition: 300ms ease-in-out;
+}
+
+#page1 .logo:hover {
+    transform: scale(0.9);
+}
+
+#page1 ul {
+    display: flex;
+    gap: 5rem;
+    font-family: var(--roboto);
+    position: relative;
+    left: -14rem;
+}
+
+#page1 ul li {
+    cursor: pointer;
+}
+
+#page1 .icons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#page1 .icons div {
+    width: 2rem;
+    height: 2rem;
+    background-color: white;
+    border-radius: 20px;
+}
+
+
+
+
+
+#page1 .left .counter {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: rgb(102, 102, 102);
+    gap: 3rem;
+    padding-left: 2rem;
+    font-family: var(--inter);  
+}
+
+#page1 .left .counter h1 {
+    cursor: pointer;
+}
+
+
+#page1 .left .counter h1.active {
+    color: white;
+    font-size: 3rem;
+}
+
+
+
+#page2 {
+    width: 100%;
+    height: 100vh;
+    background-color: red;
+}
+
+#page3 {
+    width: 100%;
+    height: 100vh;
+    background-color: blue;
+}
