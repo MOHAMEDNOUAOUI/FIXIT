@@ -8,7 +8,8 @@
     <title>FixIT</title>
 </head>
 <body>
-
+<div class="buttonscroll"></div>
+<div class="bodyover"></div>
 <section id="page1">
 
 <header>
@@ -19,7 +20,9 @@
         </div>
 
 
+
         <a href="">My Account</a>
+
     </div>
 
 
@@ -72,10 +75,12 @@
         </div>
         <!-- Item 2 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <div class="overlay"></div>
             <img src="{{asset('assets/images/left.jpg')}}" class="absolute img block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
         </div>
         <!-- Item 3 -->
         <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <div class="overlay"></div>
             <img  src="{{asset('assets/images/carrepair.jpeg')}}" class="absolute img block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
         </div>
 
@@ -107,6 +112,60 @@
 </section>
 
 
+
+
+
+
+
+
+<section id="page3">
+    <div class="middleofpage3">
+    <h1 id="D">Dependable Repair Services</h1>
+    </div>
+
+    <img id="drill" src="{{asset('assets/images/drill.png')}}" alt="">
+    <img id="cle" src="{{asset('assets/images/cle.png')}}" alt="">
+</section>
+
+
+
+<section id="page2">
+<h2>Services</h2>
+<div class="services">
+    <div class="plombier col-1">Plomberie</div>
+    <div class="plombier col-1">Viterie</div>
+    <div class="plombier col-1">Electricité</div>
+    <div class="plombier col-1">Chauffage</div>
+    <div class="plombier col-1">Climatisation</div>
+    <div class="Peinture col-1">Peinture</div>
+    <div class="plombier col-1">Maconnerie</div>
+</div>
+
+</section>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div>
+    <div id="logo">
+        <img src="{{asset ('assets/images/logo1.png')}}" alt="">
+        <h1>FIXIT</h1>
+    </div>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
+</footer>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

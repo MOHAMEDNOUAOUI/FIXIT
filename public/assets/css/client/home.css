@@ -24,18 +24,18 @@
     src: url(../../font/MADE\ TOMMY\ Light_PERSONAL\ USE.otf);
 }
 
+
+
 @font-face {
-    font-family: netflix-bold;
-    src: url(../../font/NetflixSans-Bold.otf);
+    font-family: VAN FONT;
+    src: url(../../font/vanchrome/vanchrome\ front.ttf);
 }
+
 @font-face {
-    font-family: netflix-medium;
-    src: url(../../font/NetflixSans-Medium.otf);
+    font-family: VAN outline;
+    src: url(../../font/vanchrome/vanchrome\ outline.ttf);
 }
-@font-face {
-    font-family: netflix-regular;
-    src: url(../../font/NetflixSans-Regular.otf);
-}
+
 
 :root {
 	--roboto: Roboto;
@@ -43,6 +43,7 @@
     --against: against;
     --dark : black;
     --purple : #8400EF;
+    --p2 : rgb(60, 3, 67);
     --gradient-purple: linear-gradient(90deg, rgba(141,0,255,1) 0%, rgba(75,0,137,1) 100%);
 }
 
@@ -52,7 +53,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Oxanium", sans-serif;
 }
 
 a,li {
@@ -64,6 +64,27 @@ body {
     width: 100%;
     min-height: 100vh;
     font-family: "Oxanium", sans-serif;
+    background-image: url(../../images/paper.jpg);
+    position: relative;
+}
+
+
+body .buttonscroll {
+    position: fixed;
+    right: 1rem;
+    bottom: 2rem;
+    background-color: white;
+    height: 3rem;
+    width: 3rem;
+    z-index: 4000;
+}
+.bodyover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(102, 51, 153, 0.135);
 }
 
 
@@ -76,13 +97,13 @@ body {
 #page1 header .topheader {
     width: 100%;
     background-repeat: no-repeat;
-   background-color: #1C1C1E;
+   background-color: white;
     background-size: cover;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    color: rgba(255, 255, 255, 0.553);
+    color: rgba(15, 15, 15, 0.553);
 }
 
 #page1 header .topheader .topleft {
@@ -91,7 +112,7 @@ body {
 }
 
 #page1 header .topheader .topleft #call {
-    color: orangered;
+    color: var(--p2);
     font-weight: bold;
     font-size: 1.3rem;
 }
@@ -100,7 +121,7 @@ body {
 #page1 header nav {
     width: 100%;
     height: 4rem;
-    background-color: black;
+    background-color: var(--p2);
     padding: 0 2rem 0 2rem;
     display: flex;
     align-items: center;
@@ -185,4 +206,124 @@ body {
 
 .text p {
     font-size: 2rem;
+}
+
+
+
+
+
+
+
+#page2 {
+    width: 100%;
+    height: 100vh;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#page2 h2 {
+    position: absolute;
+    left: 4.2rem;
+    top: 2rem;
+    font-size: 10rem;
+    font-family: VAN FONT;
+    color: rgb(60, 3, 67);
+}
+
+#page2 .services {
+    width: 90%;
+    height: auto;
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+
+#page2 .services .plombier {
+    background-color: red;
+}
+
+#page2 .services div {
+    height: 4rem;
+}
+
+#page2 .Peinture {
+    height: 4rem;
+    background-image: url(../../images/rouleau-peinture-bleue.jpg);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-family: VAN FONT;
+}
+
+
+#page3 {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 3rem;
+}
+
+#page3 #drill {
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    rotate: 12deg;
+    width: 30%;
+}
+
+#page3 #cle {
+    position: absolute;
+    bottom: 0;
+    left: -6rem;
+    rotate: 12deg;
+    width: 30%;
+    filter: blur(1px);
+}
+
+
+#page3 .middleofpage3 h1 {
+    font-family: VAN FONT;
+    color: transparent;
+    -webkit-text-stroke: 3px rgb(60, 3, 67);
+    font-size: 10rem;
+    letter-spacing: 4px;
+    position: relative;
+    z-index: 3000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+
+
+footer {
+    width: 100%;
+    height: 60vh;
+    background-image: url(../../images/bg.png);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
