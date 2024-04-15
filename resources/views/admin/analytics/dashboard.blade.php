@@ -14,28 +14,36 @@
         <img class="logo" src="{{asset('assets/images/logo1.png')}}" alt="">
 
         <ul>
-            <li class="active"><img src="{{asset('assets/images/analys.png')}}" alt="">
-        <span>Analytics</span>
-    </li>
+        <li class="active"><a href="{{route('Admin.index')}}" class="flex items-center"><img src="{{asset('assets/images/analys.png')}}" alt="">
+            <span>Analytics</span></a>
+        </li>
 
-    <li><img src="{{asset('assets/images/customer.png')}}" alt="">
-        <span>Customers</span>
+    <li><a class="flex items-center" href="{{route('index_Customers')}}">
+        <img src="{{asset('assets/images/customer.png')}}" alt="">
+            <span>Customers</span></a>
+        </li>
     </li>
 
     <!-- <li><img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Support</span>
     </li> -->
 
-    <li><img src="{{asset('assets/images/ticket.png')}}" alt="">
-        <span>Tickets</span>
+    <li>
+    <a class="flex items-center" href="{{route('TicketsAdmin.index')}}"> <img src="{{asset('assets/images/ticket.png')}}" alt="">
+        <span>Tickets</span></a>    
+   
+   
     </li>
 
-    <li><img src="{{asset('assets/images/info.png')}}" alt="">
+    <li>
+        <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
+        <img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Services</span>
+</a>
     </li>
 
     <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Settings</span>
+        <span>Profile</span>
     </li>
         </ul>
 
@@ -46,8 +54,8 @@
         </div>
     </nav>
     <div class="bottom">
-            <h5 class="active">Overview</h5>
-            <h5>Subscription</h5>
+            <h5 class="active"><a href="{{route('Admin.index')}}">Overview</a></h5>
+            <h5><a href="{{ route('index_Subscription')}}">Subscriptions</a></h5>
     </div>
 </header>
 
@@ -57,16 +65,24 @@
 <section id="main">
     <div class="stats">
         <div class="first">
-            <h3>New Customers</h3>
-            <h3>200</h3>
+            <h3>Total Users</h3>
+            <h4>{{$CountUsers['Users']}}</h3>
         </div>
         <div class="second">
-            <h3>Various Services</h3>
-            <h3>200</h3>
+            <h3>Metiers</h3>
+            <h4>{{$CountUsers['Metiers']}}</h3>
         </div>
         <div class="third">
-            <h3>New Tickets</h3>
-            <h3>200</h3>
+            <h3>Clients</h3>
+            <h4>{{$CountUsers['Clients']}}</h3>
+        </div>
+        <div class="first">
+            <h3>Total Tickets</h3>
+            <h4>{{$CountUsers['Tickets']}}</h3>
+        </div>
+        <div class="second">
+            <h3>Depanneurs</h3>
+            <h4>{{$CountUsers['Depanneurs']}}</h3>
         </div>
     </div>
 
@@ -89,10 +105,6 @@
 
     </div>
 
-
-    <div id="end">
-
-    </div>
 </section>
     
 

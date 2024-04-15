@@ -28,6 +28,9 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #15161A;
+    position: relative;
+    -webkit-transform: perspective(900px);
+  -webkit-transform-style: preserve-3d;
 }
 
 header {
@@ -110,12 +113,13 @@ header .bottom {
 .content {
     margin-top: 1rem;
  width: 73%;
-height: 75%;
+height: auto;
 background-color: #1F2025;
 margin-left: auto;
 margin-right: auto;
 border-radius: 10px;
 border: 1px solid rgba(255, 255, 255, 0.123);
+padding: 1rem;
 }
 
 
@@ -158,4 +162,114 @@ table {
     border: 1px solid rgba(255, 255, 255, 0.279);
     width: 50%;
     border-radius: 20px;
+}
+
+
+
+.alert {
+    position: absolute;
+
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.203);
+    border-radius: 20px;
+    transform: translate(-50%,0);
+    padding: 1rem 2rem;
+    color: white;
+    animation: animation 300ms forwards;
+}
+
+@keyframes animation {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 9%;
+    }
+}
+
+
+.profilepic {
+    height: 2.2rem;
+    width: 2.2rem;
+    background-color: red;
+    border-radius: 20px;
+}
+
+.userbag:hover {
+    background-color: rgb(37, 21, 49);
+}
+
+
+
+.statsusers {
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.statsusers .statis {
+    width: calc(100% / 3);
+    height: 100%;
+    background-color: rgb(37, 21, 49);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    
+}
+
+
+.statscontent {
+    width: 75%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+}
+
+.statis .overlay {
+    position: absolute;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.416);
+    width: 0%;
+    height: 100%;
+}
+
+.statis {
+    position: relative;
+}
+
+.statis p {
+    color: white;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.statis:hover .overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    animation: animationoverlay 500ms ease-in-out forwards;
+    border-radius: 20px;
+}
+
+.statis:hover p {
+    display: none;
+}
+
+.overlay h3 {
+    z-index: 1000;
+    color: black;
+}
+
+@keyframes animationoverlay {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
 }

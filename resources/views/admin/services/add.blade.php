@@ -22,20 +22,20 @@
         <span>Customers</span>
     </li>
 
-    <!-- <li><img src="{{asset('assets/images/info.png')}}" alt="">
-        <span>Support</span>
-    </li> -->
 
     <li><img src="{{asset('assets/images/ticket.png')}}" alt="">
         <span>Tickets</span>
     </li>
 
-    <li class="active"><img src="{{asset('assets/images/info.png')}}" alt="">
+    <li class="active">
+        <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
+        <img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Services</span>
+</a>
     </li>
 
     <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Settings</span>
+        <span>Profile</span>
     </li>
         </ul>
 
@@ -46,10 +46,8 @@
         </div>
     </nav>
     <div class="bottom">
-            <h5>Overview</h5>
-            <h5 class="active">Add Services</h5>
-            <h5>Modify Services</h5>
-            <h5>Delete Services</h5>
+    <h5><a href="{{route('MetierAdmin.index')}}">Overview</a></h5>
+            <h5 class="active"><a href="{{route('admin.services.add')}}">Add Services</a></h5>
     </div>
 </header>
 
@@ -57,8 +55,9 @@
 
 <div class="content">
     
-<form action="" id="formulair">
-    <input type="text" name="service" id="">
+<form action="{{route('MetierAdmin.create')}}" method="GET" id="formulair">
+@csrf
+    <input type="text" name="metier" id="">
     <button>ADD</button>
 </form>
 

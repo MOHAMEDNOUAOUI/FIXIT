@@ -14,12 +14,14 @@
         <img class="logo" src="{{asset('assets/images/logo1.png')}}" alt="">
 
         <ul>
-            <li class="active"><img src="{{asset('assets/images/analys.png')}}" alt="">
-        <span>Analytics</span>
-    </li>
+        <li class="active"><a href="{{route('Admin.index')}}" class="flex items-center"><img src="{{asset('assets/images/analys.png')}}" alt="">
+            <span>Analytics</span></a>
+        </li>
 
-    <li><img src="{{asset('assets/images/customer.png')}}" alt="">
-        <span>Customers</span>
+        <li><a class="flex items-center" href="{{route('index_Customers')}}">
+        <img src="{{asset('assets/images/customer.png')}}" alt="">
+            <span>Customers</span></a>
+        </li>
     </li>
 
     <!-- <li><img src="{{asset('assets/images/info.png')}}" alt="">
@@ -30,12 +32,15 @@
         <span>Tickets</span>
     </li>
 
-    <li><img src="{{asset('assets/images/info.png')}}" alt="">
+    <li>
+        <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
+        <img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Services</span>
+</a>
     </li>
 
     <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Settings</span>
+        <span>Profile</span>
     </li>
         </ul>
 
@@ -46,8 +51,8 @@
         </div>
     </nav>
     <div class="bottom">
-            <h5>Overview</h5>
-            <h5 class="active">Subscription</h5>
+    <h5 ><a href="{{route('Admin.index')}}">Overview</a></h5>
+            <h5 class="active"><a href="{{ route('index_Subscription')}}">Subscriptions</a></h5>
     </div>
 </header>
 
@@ -60,10 +65,10 @@
 <div id="inside">
 <div>
 <h3>Customers</h3>
-<p>The list has <span>20,000</span> Client,<span>1400</span> of them are Deppaneur</p>
+<p>The list has <span>{{$Subscriptions['Users']}}</span> User,<span>{{$Subscriptions['Depanneurs']}}</span> of them are Deppaneur</p>
 </div>
 
-<a href="">View List</a>
+<a href="{{route('index_Customers')}}">View List</a>
 </div>
 
 
@@ -72,12 +77,7 @@
 
 
     <div class="circle">
-        <h3>Revenue</h3>
 
-
-        <div>
-            
-        </div>
     </div>
 
 
@@ -92,29 +92,22 @@
 
         <div id="B">
 
+        @foreach($metiers as $one)
+
         <div>
-            <h3>100</h3>
-            <h3>Specialite</h3>
+            <h3>{{$one->depanneur_count}}</h3>
+            <h3>{{$one->Metier}}</h3>
         </div>
-        <div>
-            <h3>100</h3>
-            <h3>Specialite</h3>
-        </div>
-        <div>
-            <h3>100</h3>
-            <h3>Specialite</h3>
-        </div>
-        <div>
-            <h3>100</h3>
-            <h3>Specialite</h3>
-        </div>
+
+        @endforeach
+
+        
 
 
         </div>
     </div>
-    <div class="ocupied"></div>
+    
 
-    <div class="lasted"></div>
 </div>
 
 

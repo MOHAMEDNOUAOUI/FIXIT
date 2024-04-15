@@ -21,7 +21,7 @@
     <div class="logosection">
         <img src="{{asset('assets/images/logo1.png')}}" alt="">
         <h2>Create Account</h2>
-        <p>Already have an account? <span>Sign in</span></p>
+        <p>Already have an account? <span><a href="{{ route('login')}}">Sign in</a></span></p>
     </div>
 
 
@@ -37,33 +37,58 @@
     </div>
 
     <div class="sign">
-        <form action="">
-            <div class="top">
-                    <input type="text" name="firstname" placeholder="first name">
-                    <input type="text" name="lastname" placeholder="last name">
+
+
+        <form method="POST" action="{{ route('registerform')}}">
+        @csrf
+
+        <select name="role" id="">
+                <option value="" disabled selected>Account type</option>
+                <option value="Client">Client</option>
+                <option value="Depanneur">Depanneur</option>
+            </select>
+            @error('role')
+            <span style="color:white">{{ $message }}</span>
+        @enderror
+
+        <div class="name">
+                <input type="name" value="{{ old('name') }}" name="name" placeholder="name">
+                @error('name')
+            <span style="color:white">{{ $message }}</span>
+        @enderror
             </div>
 
             <div class="email">
-                <input type="email" name="email" placeholder="email">
+                <input type="email" value="{{ old('email') }}" name="email" placeholder="email">
+                @error('email')
+            <span style="color:white">{{ $message }}</span>
+        @enderror
             </div>
 
             <div class="password">
                 <input type="password" name="password" placeholder="password">
+                @error('password')
+            <span style="color:white">{{ $message }}</span>
+        @enderror
             </div>
 
             <div class="confirmpassword">
-                <input type="password" name="confirmpassword" placeholder="confirm password">
+                <input type="password" name="password_confirmation" placeholder="confirm password">
+                @error('password_confirmation')
+            <span style="color:white">{{ $message }}</span>
+        @enderror
             </div>
 
-
             <div class="last">
-                <button>Register</button>
+                <button type="submit">Register</button>
                 <div>
                     <input type="checkbox">
                     <p>i agree to the <span>Terms of Service</span> and <span>Privacy Policy</span></p>
                 </div>
             </div>
         </form>
+
+
     </div>
 
 

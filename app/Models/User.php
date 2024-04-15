@@ -44,4 +44,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function image() {
+        return $this->hasOne(images::class , 'user_id');
+    }
+
+    public function depanneur()
+    {
+        return $this->hasOne(Depanneur::class , 'user_id');
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class , 'user_id');
+    }
 }

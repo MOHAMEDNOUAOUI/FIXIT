@@ -14,13 +14,15 @@
         <img class="logo" src="{{asset('assets/images/logo1.png')}}" alt="">
 
         <ul>
-            <li><img src="{{asset('assets/images/analys.png')}}" alt="">
-        <span>Analytics</span>
-    </li>
+        <li><a href="{{route('Admin.index')}}" class="flex items-center"><img src="{{asset('assets/images/analys.png')}}" alt="">
+            <span>Analytics</span></a>
+        </li>
 
-    <li class="active"><img src="{{asset('assets/images/customer.png')}}" alt="">
-        <span>Customers</span>
-    </li>
+    <li class="active">   
+        <a class="flex items-center" href="{{route('index_Customers')}}">
+        <img src="{{asset('assets/images/customer.png')}}" alt="">
+            <span>Customers</span></a>
+        </li>
 
     <!-- <li><img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Support</span>
@@ -30,12 +32,15 @@
         <span>Tickets</span>
     </li>
 
-    <li><img src="{{asset('assets/images/info.png')}}" alt="">
+    <li>
+        <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
+        <img src="{{asset('assets/images/info.png')}}" alt="">
         <span>Services</span>
+</a>
     </li>
 
     <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Settings</span>
+        <span>Profile</span>
     </li>
         </ul>
 
@@ -46,16 +51,43 @@
         </div>
     </nav>
     <div class="bottom">
-            <h5 class="active">Overview</h5>
-            <h5>Clients</h5>
-            <h5>Deppaneur</h5>
+            <h5 class="active"><a href="{{route('index_Customers')}}">Overview</a></h5>
+            <h5><a href="{{route('client_Customers')}}">Clients</a></h5>
+            <h5><a href="{{route('depaneur_Customers')}}">Deppaneur</a></h5>
     </div>
 </header>
 
 
 
-<div class="content">
-    
+<div class="statscontent">
+
+
+        <div class="statsusers">
+            <div class="statis clients flex items-center justify-center">
+                <p>Users</p>
+
+                <div class="overlay">
+                <h3 class="text-white text-5xl">{{$Usercount['Users']}}</h3>
+                </div>
+            </div>
+
+            <div class="statis clients flex items-center justify-center">
+                <p>Clients</p>
+
+                <div class="overlay">
+                <h3 class="text-white text-5xl">{{$Usercount['Clients']}}</h3>
+                </div>
+            </div>
+
+            <div class="statis clients flex items-center justify-center">
+                <p>Depanneurs</p>
+
+                <div class="overlay">
+                <h3 class="text-white text-5xl">{{$Usercount['Depanneur']}}</h3>
+                </div>
+            </div>
+           
+        </div>
 
 </div>
 
