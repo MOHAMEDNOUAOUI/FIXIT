@@ -72,7 +72,8 @@ class AdminController extends Controller
     }
 
     public function depaneur_Customers () {
-        $depanneurs = Depanneur::with('user')->paginate(10);
+        $depanneurs = Depanneur::with(['user.image' , 'metiers'])->paginate(10);
+
         return view('admin.customers.depaneur'  , compact('depanneurs'));
     }
 

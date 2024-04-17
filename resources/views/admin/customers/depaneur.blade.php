@@ -74,7 +74,13 @@
                     Email
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Metier
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Location
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
                 </th>
             </tr>
         </thead>
@@ -95,7 +101,21 @@
                         {{$one->user->email}}
                         </td>
                         <td class="px-6 py-2 text-white">
+                                
+                                @foreach ($one->metiers as $metier) 
+                                    @if($metier->Metier != null)
+                                    {{$metier->Metier}}
+                                    @else
+                                    Sans Metier
+                                    @endif
+                                @endforeach
+        
+                        </td>
+                        <td class="px-6 py-2 text-white">
                             hay salam
+                        </td>
+                        <td class="px-6 py-2 text-white">
+                            {{$one->user->status}}
                         </td>
             </tr>
 

@@ -21,7 +21,6 @@ class DepanneurController extends Controller
         $DeppaneurCount = Depanneur::count();
         $TicketsCount = Ticket::where('user_id' , Auth::id())->count();
         $userinfo = User::with(['image', 'depanneur'])->where('id', Auth::id())->first();
-
         if ($userinfo->image) {
             $imageData = $userinfo->image->image;
             $base64Image = base64_encode($imageData);

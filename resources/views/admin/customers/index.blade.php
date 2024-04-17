@@ -63,30 +63,8 @@
 
 
         <div class="statsusers">
-            <div class="statis clients flex items-center justify-center">
-                <p>Users</p>
-
-                <div class="overlay">
-                <h3 class="text-white text-5xl">{{$Usercount['Users']}}</h3>
-                </div>
-            </div>
-
-            <div class="statis clients flex items-center justify-center">
-                <p>Clients</p>
-
-                <div class="overlay">
-                <h3 class="text-white text-5xl">{{$Usercount['Clients']}}</h3>
-                </div>
-            </div>
-
-            <div class="statis clients flex items-center justify-center">
-                <p>Depanneurs</p>
-
-                <div class="overlay">
-                <h3 class="text-white text-5xl">{{$Usercount['Depanneur']}}</h3>
-                </div>
-            </div>
-           
+            
+            test
         </div>
 
 </div>

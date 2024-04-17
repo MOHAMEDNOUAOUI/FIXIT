@@ -46,7 +46,7 @@ class AuthController extends Controller
         }
 
         session()->flash('status', 'Registration completed successfully.');
-        return redirect()->route('Login');
+        return redirect()->route('login');
     }
 
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DepanneurController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Metier;
 use App\Http\Controllers\MetierController;
 use App\Http\Controllers\TicketController;
@@ -61,6 +62,10 @@ Route::middleware([DepanneurMiddleware::class , 'auth'])->group(function () {
     Route::get('/Depanneur/Rating' , [DepanneurController::class , 'Rating'])->name('Depanneur.Rating');
     Route::post('/Depanneur/availability', [DepanneurController::class , 'Available'])->name('available');
     Route::resource('Depanneur' , DepanneurController::class);
+
+
+
+    Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
 });
 
 

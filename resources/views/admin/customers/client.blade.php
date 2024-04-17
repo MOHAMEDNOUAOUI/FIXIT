@@ -76,6 +76,9 @@
                 <th scope="col" class="px-6 py-3">
                     Location
                 </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -96,6 +99,9 @@
                         </td>
                         <td class="px-6 py-2 text-white">
                             hay salam
+                        </td>
+                        <td class="px-6 py-2 text-white">
+                            {{$one->user->status}}
                         </td>
             </tr>
 
