@@ -17,6 +17,9 @@ class MetierController extends Controller
         return view('admin.services.index' , compact('metierwithusers'));
     }
 
+
+    
+
     public function add_admin() {
         return view('admin.services.add');
     }

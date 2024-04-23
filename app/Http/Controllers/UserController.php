@@ -23,4 +23,15 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'User updated successfully.');
     }
+
+
+
+    public function searchBanned(Request $request)
+    {
+        $user = User::where('name', 'like', 'mo' . '%')->get();
+        return response()->json($user);
+    }
+
+
+
 }

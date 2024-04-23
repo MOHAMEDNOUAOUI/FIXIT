@@ -59,4 +59,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client::class , 'user_id');
     }
+
+    public function location() {
+        return $this->hasOne(Location::class);
+    }
 }

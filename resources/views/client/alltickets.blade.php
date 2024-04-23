@@ -9,8 +9,7 @@
 </head>
 <body>
 <div class="buttonscroll"></div>
-<div class="bodyover"></div>
-<section id="page1">
+<section id="page1" style="height: auto;padding-bottom:3rem">
 
 <header>
     <div class="topheader">
@@ -29,7 +28,7 @@
     <nav>
 
     <div id="logo">
-    <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
+        <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
     </div>
 
 
@@ -37,8 +36,8 @@
         <ul>
             <li><a href="{{route('client_services')}}">Services</a></li>
             <li>About us</li>
-            <li><a href="{{route('contact')}}">Contact us</a></li>
-            <li><a href="{{route('support')}}">Support</a></li>
+            <li>Contact us</li>
+            <li class="active"><a href="{{route('support')}}">Support</a></li>
             <li><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></li>
             <li><ion-icon class="icon" name="notifications-outline"></ion-icon></li>
         </ul>
@@ -56,172 +55,79 @@
 
 </header> 
 
-
-<main>
-
-
-
-
-    
-
-
-        
-    </main>
-</section>
-
-
-
-
-<section id="page4">
-
-<div class="stats">
-    <div class="SS">
-        <div class="square"><img src="{{asset('assets/images/speed.png')}}" alt=""></div>
-        <div class="texto">
-            <h2>Strict Deadline</h2>
-            <p>Optimal planning with strict deadline</p>
-        </div>
-    </div>
-    <div class="SS">
-        <div class="square"></div>
-        <div class="texto">
-            <h2>24/7 Service</h2>
-            <p>We are available everytime you wish</p>
-        </div>
-    </div>
-    <div class="SS">
-        <div class="square"></div>
-        <div class="texto">
-            <h2>Qualified Workers</h2>
-            <p>Our whole workers are too much skilled</p>
-        </div>
-    </div>
-</div>
-</section>
-
-
-
-
-
-
-<section id="page3">
-    <div class="middleofpage3">
-    <h1 id="D">Dependable Repair Services</h1>
-    </div>
-
-    <img id="drill" src="{{asset('assets/images/drill.png')}}" alt="">
-    <img id="cle" src="{{asset('assets/images/cle.png')}}" alt="">
-</section>
-
-
-
-
-
-
-
-
-<div class="inbetween flex justify-between items-center">
-        <div class="flex">
-        <h1>We Are FIX it</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-        </div>
-        <button>REQUEST A SERVICE</button>
+<div class="underheader">
+    <p><a href="{{route('support')}}">Submit a ticket</a> > <a class="active" href="{{route('ticketshow')}}">your tikets</a></p>
 </div>
 
+<div class="submutticket flex flex-col justify-center items-center mt-7">
 
+    <h1>My Tickets</h1>
 
+    <div class="searchingfilter">
+        <input type="text" placeholder="SEARCH REQUEST" id="search">
 
-<section id="page2">
-<h2>Services</h2>
-
-<div class="how">
-    <div class="works">
-    <h1>How It Works</h1>
-    <p>IN EASY 3 STEPS</p>
+        <form id="filterForm" action="{{route('ticketshow')}}" method="get">
+                <select name="filter" id="filterticket">
+                    <option value="" disabled selected>-</option>
+                    <option value="Awaiting">awaiting</option>
+                    <option value="Open">open</option>
+                    <option value="Solved">solved</option>
+                </select>
+        </form>
     </div>
 
-    <div class="tutorial">
-        <div class="tuto">
-            <div class="insidetuto">
-                <img src="{{asset('assets/images/order-now.png')}}" alt="">
-            </div>
-            <p>1.<span>We take your order from your selection</span> </p>
-        </div>
-        <div class="tuto">
 
-        <div class="insidetuto">
-        <img style="width: 30%;" src="{{asset('assets/images/mechanic.png')}}" alt="">
-        </div>
-            <p>2.<span>We find a depanneur closer to you</span></p>
-        </div>
-        <div class="tuto">
-            <div class="insidetuto">
-                <img src="{{asset('assets/images/fast-delivery.png')}}" alt="">
-            </div>
+
+   
+
+<div class="relative overflow-x-auto mt-8" style="width: 87vw;">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    SUBJECT
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    TICKETID
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    LAST UPDATED
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    STATUS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
             
-            <p>3.<span>We make sure he contacts you , and its done</span></p>
-        </div>
-    </div>
+           @foreach($tickets as $ticket)
+
+           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{$ticket->Subject}}
+                </th>
+                <td class="px-6 py-4">
+                    {{$ticket->id}}
+                </td>
+                <td class="px-6 py-4">
+                {{$ticket->created_at_parsed}}
+                </td>
+                <td class="px-6 py-4">
+                    {{$ticket->priority}}
+                </td>
+            </tr>
+
+           @endforeach
+           
+        </tbody>
+    </table>
 </div>
 
-
-<div class="services">
-    <div class="TT plombier col-1">Plomberie</div>
-    <div class="TT Viterie col-1">Viterie</div>
-    <div class="TT Electricité col-1">Electricité</div>
-    <div class="TT Menuiserie col-1">Menuiserie</div>
-    <div class="TT Climatisation col-1">Climatisation</div>
-    <div class="TT Peinture col-1">Peinture</div>
-    <div class="TT Maconnerie col-1">Maconnerie</div>
-    <div class="TT  col-1"></div>
-    <div class="TT  col-1"></div>
+<div class="pagination mt-4">
+    {{ $tickets->links() }}
 </div>
 
-
-
-<a href="{{route('client_services')}}"><img class="arrow-down" src="{{asset('assets/images/down-arrows.png')}}" alt=""></a>
-
-
-</section>  
-
-
-
-<section id="page5">
-    <h2>MAPS</h2>
-
-    <div class="containermap">
-        <div class="CC">
-        <div class="leftmap">
-            <div id="urlocation" class="cont">
-
-            </div>
-            <div id="" class="cont">
-
-            </div>
-            <div id="" class="cont">
-
-            </div>
-            <div id="" class="cont">
-
-            </div>
-            <div id="" class="cont">
-
-            </div>
-            
-            
-        </div>
-        <div class="rightmap"></div>
-        </div>
-    </div>
 </section>
-
-
-
-
-
-
-
-
 
 
 
@@ -293,6 +199,15 @@
    </div>
 </footer>
 
+
+
+
+<script>
+
+document.getElementById('filterticket').addEventListener('change', function() {
+        document.getElementById('filterForm').submit();
+    });
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

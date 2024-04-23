@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('assets/css/admin/customer/index.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <title>Document</title>
@@ -61,17 +62,77 @@
 
 <div class="statscontent">
 
+<div class="flex flex-col gap-1 items-center text-white" style="width: 50%;">
+<h1 class="text-2xl">Search for a user</h1>
+<input type="text" name="search" id="search">
 
-        <div class="statsusers">
-            
-            test
-        </div>
+
+<div class="wrapper">
+    
+</div>
+
+
+</div>
 
 </div>
 
 
 
 
+
+
+<script>
+
+
+document.querySelector('#search').addEventListener('input' , function() {
+
+    document.querySelector('.wrapper').innerHTML = '';
+    let username = this.value;
+    let xhr = new XMLHttpRequest();
+
+
+    if(username === ''){
+        document.querySelector('.wrapper').innerHTML = '';
+        return ;
+    }
+
+    xhr.onload = function () {
+        if(this.status == 200 && this.readyState == 4){
+            let data = JSON.parse(this.responseText);
+            document.querySelector('.wrapper').innerHTML = '';
+            console.log(data);
+            data.forEach(element => {
+                let div = document.createElement('div');
+                div.classList.add('insider');
+
+
+
+
+            document.querySelector('.wrapper').appendChild(div);
+            });
+
+        }
+    };
+
+
+    xhr.open('POST', '{{ route('search.banned') }}');
+    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({ username: username }));
+})
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>   

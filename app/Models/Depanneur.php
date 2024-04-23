@@ -16,7 +16,7 @@ class Depanneur extends Model
 
 
     public function metiers() {
-        return $this->belongsToMany(Metier::class);
+        return $this->belongsToMany(Metier::class, 'metier_user');
     }
 
     public function user() {

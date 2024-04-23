@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DepanneurController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Metier;
 use App\Http\Controllers\MetierController;
+use App\Http\Controllers\ServiceAppointementsController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,9 +31,13 @@ Route::group(['prefix' => '/auth'], function () {
 
 
 Route::middleware([ClientMiddleware::class ,'auth'])->group(function () {
-    Route::get('/', function () {
-        return view('client.index');
-    })->name('HOME');
+    Route::get('/', [ClientController::class  , 'index'])->name('HOME');
+    Route::get('/services' , [ClientController::class , 'services'])->name('client_services');
+    Route::get('/contact' , [ClientController::class , 'contact'])->name('contact');
+    Route::resource('reservation' , ServiceAppointementsController::class);
+    Route::get('/support' , [ClientController::class , 'support'])->name('support');
+    Route::get('/ticketshow' , [TicketController::class , 'ticketshow'])->name('ticketshow');
+    Route::resource('ticket' , TicketController::class);
 });
 
 Route::middleware([AdminMiddleware::class , 'auth'])->group(function () {
@@ -54,18 +60,20 @@ Route::middleware([AdminMiddleware::class , 'auth'])->group(function () {
     Route::resource('Admin' , AdminController::class);
 
 
+
+    Route::post('/search-banned', [UserController::class , 'searchBanned'])->name('search.banned');
     
 });
+
+Route::post('/locations', [LocationController::class, 'store'])
+    ->name('locations.store')
+    ->middleware('auth');
 
 Route::middleware([DepanneurMiddleware::class , 'auth'])->group(function () {
     Route::get('/Depanneur/services' , [DepanneurController::class , 'services'])->name('Depanneur.services');
     Route::get('/Depanneur/Rating' , [DepanneurController::class , 'Rating'])->name('Depanneur.Rating');
     Route::post('/Depanneur/availability', [DepanneurController::class , 'Available'])->name('available');
     Route::resource('Depanneur' , DepanneurController::class);
-
-
-
-    Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
 });
 
 

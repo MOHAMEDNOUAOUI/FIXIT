@@ -2,32 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Models\Metier;
+use App\Models\Sous_metier;
 use Illuminate\Http\Request;
 
-class ClientController extends Controller
+class SousMetierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('client.index');
-    }
-
-    public function services() {
-        $metier = Metier::with(['sous_metier' , 'Depanneur'])->paginate(3);
-        return view('client.services' , compact('metier'));
-    }
-
-    public function support() {
-        return view('client.support');
-    }
-
-
-    public function contact() {
-        return view('client.contact');
+        //
     }
 
     /**
@@ -49,7 +34,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(Sous_metier $sous_metier)
     {
         //
     }
@@ -57,7 +42,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(Sous_metier $sous_metier)
     {
         //
     }
@@ -65,7 +50,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Sous_metier $sous_metier)
     {
         //
     }
@@ -73,7 +58,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Client $client)
+    public function destroy(Sous_metier $sous_metier)
     {
         //
     }

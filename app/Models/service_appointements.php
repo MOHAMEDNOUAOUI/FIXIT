@@ -10,6 +10,13 @@ class service_appointements extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'client_id',
+        'depanneur_id',
+        'service_type',
+    ];
+
+
     public function depanneur()
     {
         return $this->belongsTo(Depanneur::class);

@@ -15,6 +15,10 @@ class Metier extends Model
 
 
     public function Depanneur() {
-        return $this->belongsToMany(Depanneur::class , 'metier_user');
+        return $this->belongsToMany(Depanneur::class, 'metier_user');
+    }
+
+    public function sous_metier() {
+        return $this->hasMany(Sous_metier::class , 'Metier_id');
     }
 }

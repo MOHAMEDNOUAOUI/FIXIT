@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('ticket__answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->text('Type');
-            $table->text('Subject');
-            $table->text('Message');
-            $table->enum('priority', ['Awaiting', 'Solved', 'Open'])->default('Awaiting');
+            $table->foreignId('ticket')->constrained('tickets');
+            $table->foreignId('replyer')->constrained('users');
+            $table->text('answer');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('ticket__answers');
     }
 };

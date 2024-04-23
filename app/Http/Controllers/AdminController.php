@@ -58,12 +58,7 @@ class AdminController extends Controller
     }
 
     public function index_Customers() {
-        $Usercount = [
-            'Users' => User::count(),
-            'Clients' => Client::count(),
-            'Depanneur' => Depanneur::count(),
-        ];
-        return view ('admin.customers.index' , compact('Usercount'));
+        return view ('admin.customers.index');
     }
 
     public function client_Customers () {

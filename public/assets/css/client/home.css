@@ -64,7 +64,6 @@ body {
     width: 100%;
     min-height: 100vh;
     font-family: "Oxanium", sans-serif;
-    background-image: url(../../images/paper.jpg);
     position: relative;
 }
 
@@ -93,6 +92,7 @@ body .buttonscroll {
     width: 100%;
     height: 100vh;
     position: relative;
+    z-index: 3000;
 }
 
 #page1 header .topheader {
@@ -122,7 +122,7 @@ body .buttonscroll {
 #page1 header nav {
     width: 100%;
     height: 4rem;
-    background: linear-gradient(to right, rgb(173, 83, 137), rgb(60, 16, 83));
+   background-color: rgb(31,41,47);
     padding: 0 2rem 0 2rem;
     display: flex;
     align-items: center;
@@ -147,6 +147,11 @@ body .buttonscroll {
     align-items: center;
 }
 
+#page1 header nav ul li.active {
+    color: rgb(255,231,21);
+    font-weight: bold;
+}
+
 #page1 header nav ul .icon {
     font-size: 1.4rem;
 }
@@ -154,7 +159,6 @@ body .buttonscroll {
 #page1 main {
     width: 100%;
     height: calc(100% - 8rem);
-    background-image: url(../../);
 }
 
 #default-carousel {
@@ -217,18 +221,19 @@ body .buttonscroll {
 
 #page2 {
     width: 100%;
-    height: 100vh;  
+    min-height: 100vh;  
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    gap: 2rem;
     z-index: 3000;
 }
 
 #page2 h2 {
     font-size: 10rem;
     font-family: VAN FONT;
-    color: rgb(60, 3, 67);
+    color: rgb(255, 242, 0);
 }
 
 #page2 .services {
@@ -471,7 +476,7 @@ body .buttonscroll {
 #page5 h2 {
     font-size: 10rem;
     font-family: VAN FONT;
-    color: rgb(60, 3, 67);
+    color: rgb(255, 242, 0);
 }
 
 
@@ -533,13 +538,36 @@ body .buttonscroll {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 3000;
 }
 
 #page6 #inside {
-height: 50%;
+height: 40%;
 width: 70%;
-background-color: red;
+display: flex;
+justify-content:center;
+align-items: center;
+flex-direction: column;
+background-color: rgb(235, 235, 0);
 border-radius: 20px;
+padding: 0 3rem;
+}
+
+#page6 #inside p {
+    font-size: 1.5rem;
+    font-family: VAN FONT;
+}
+
+#page6 #inside p span {
+    font-size: 1.2rem;
+    font-family: var(--roboto);
+}
+
+#page6 #inside input {
+    width: 70%;
+    border-radius: 10px;
+    border: 1px solid black;
 }
 
 
@@ -552,9 +580,486 @@ border-radius: 20px;
 
 
 footer {
-    width: 100%;
     height: 40vh;
-    background-image: url(../../images/ice.jpg);
+    background-color: rgb(15, 4, 33);
     background-position: center;
     background-size: cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    align-content: center;
+    position: relative;
+    z-index: 3000;
+    padding: 1rem;
 }
+
+.firstpart img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.firstpart{
+    width: 100%;
+    display: flex;
+    height: auto;
+    justify-content: center;
+}
+
+.firstpart h1 {
+    font-size: 3rem;
+    font-family: against;
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.iconfooter  {
+    width: 2.3rem;
+    height: 2.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    transition: 300ms ease-in;
+    cursor: pointer;
+}
+
+.X {
+    background-color: white;
+    color: black;
+}
+
+.iconfooter svg {
+    width: 60%;
+    height: 60%;
+}
+
+.containerbottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.iconfooter:hover {
+    transform: scale(1.2);
+}
+
+
+
+.inbetween {
+    width: 100%;
+    height: 7rem;
+    padding: 1rem 6rem;
+    background-color: yellow;
+}
+
+.inbetween div {
+    gap: 0.2rem;
+    align-items: first baseline;
+}
+.inbetween div h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: var(--roboto);
+    color: rgb(40, 36, 36);
+}
+
+.inbetween div p {
+    font-size: 1.1rem;
+}
+
+.inbetween button {
+    background-color: white;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 300ms ease-in;
+}
+
+
+
+
+.how {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.how .works {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.how .works h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: var(--inter);
+    color: blue;
+}
+
+.how .works p {
+    color: rgb(255, 208, 0);
+    font-weight: bold;
+}
+
+.how .tutorial{
+    width: 80%;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.how .tutorial .tuto {
+    width: 30%;
+    height: 13rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.how .tutorial .tuto  img {
+    width: 40%;
+    transition: ease 300ms;
+}
+
+.how .tutorial .tuto p {
+    font-weight: bold;
+    text-align: center;
+    width: 70%;
+}
+
+.how .tutorial .tuto p span {
+    font-weight: normal;
+}
+
+.insidetuto {
+    height: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.tuto:hover img {
+    transform: scale(1.2);
+}
+
+
+.arrow-down {
+    width: 3rem;
+    height: 3rem;
+    background-color: yellow;
+    border-radius: 100px;
+    padding:0.7rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.arrow-down:hover {
+    transform: scale(1.1);
+    transform: translateY(20%);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* serivices */
+
+.mainservice {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.item {
+    width: 72%;
+    height: 15rem;
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.192);
+}
+.item .leftitem {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.192);
+}
+
+.item .leftitem img {
+    width: 60%;
+}
+
+.item .rightitem {
+    width: 50%;
+    background-color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.item .rightitem h2{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
+    font-family: var(--inter);
+    text-transform: uppercase;
+}
+
+
+.lastitem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+
+.lastitem button {
+    background-color: yellow;
+    color: black;
+    font-weight: bold;
+    padding: 0.3rem 2rem;
+}
+
+
+
+.servicepage {
+    background-image: url(../../images/best-website-designs.webp);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.servicepage::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.491);
+}
+
+.servicepage h1 {
+    color: rgb(255, 255, 255);
+    font-family: var(--roboto);
+    font-size: 4rem;
+    width: 80%;
+    line-height: 4rem;
+    position: relative;
+    z-index: 4000;
+}
+
+.servicepage h1 span {
+     font-family: var(--against);
+    background-color: rgb(255, 255, 255);
+    color: transparent;
+    text-shadow: 2px 2px 3px rgba(255, 255, 0, 0.626);
+  -webkit-background-clip: text;
+     -moz-background-clip: text;
+          background-clip: text;
+          font-size: 3.4rem;
+}
+
+.maintext h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: blue;
+}
+
+.maintext p {
+    color: rgb(255, 217, 0);
+    font-weight: bold;
+    position: relative;
+    top: -0.5rem;
+}
+
+
+
+
+
+.submutticket {
+    width: 100%;
+    padding:1rem 20rem;
+    height: 100%;
+}
+
+
+
+
+.submutticket h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.submutticket p {
+    text-align: center;
+    color: rgb(97, 97, 97);
+}
+
+.submutticket h2 {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: rgb(97, 97, 97);
+}
+
+.submutticket .underline {
+
+    background-color: rgb(97, 97, 97);
+    width: 100%;
+    height: 1px;
+}
+
+.submutticket button {
+    background-color: yellow;
+    width: 30%;
+    padding: 0.7rem 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.contact {
+    width: 100%;
+    height: 110vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.backgroundemail {
+    height: 15rem;
+    width: 60%;
+    background-image: url(../../images/envelop2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    filter: contrast(100px);
+}
+
+.backgroundemail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 234, 0, 0.178);
+}
+
+#contactform {
+    width: 45%;
+    height: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    font-family: var(--inter);
+    gap: 1rem;
+    top: 20%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#contactform h1 {
+    font-size: 2rem;
+    font-weight: bold;
+
+}
+
+#contactform  p {
+    text-align: center;
+    width: 80%;
+    color: rgba(146, 146, 146, 0.708);
+}
+
+#contactform textarea {
+    border-radius: 5px;
+}
+
+#contactform button {
+    background-color: rgb(37,73,169);
+    width: 78%;
+    padding: 0.5rem;
+    color: white;
+    font-family: var(--inter);
+}
+
+
+.underheader {
+    width: 100%;
+    height: auto;
+    background-color: black;
+    padding: 1rem;
+    color: rgb(194, 194, 194);
+    font-size: 0.8rem;
+}
+
+.underheader p a.active {
+    color: white;
+}
+
+
+.searchingfilter {
+    width: 180%;
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.searchingfilter input {
+    width: 30%;
+    height: 55%;
+    font-size: 0.8rem;
+    border: 1px solid rgb(151, 151, 151);
+}
+
+.searchingfilter form {
+    width: 30%;
+}
+
+.searchingfilter select {
+    width: 100%;
+    height: 50%;
+    font-size: 0.8rem;
+    border: 1px solid rgb(151, 151, 151);
+}
+
+

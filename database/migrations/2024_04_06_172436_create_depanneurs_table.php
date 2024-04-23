@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('depanneurs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->enum('status' , ['available' , 'notavailable'])->default('available');
             $table->timestamps();
         });
     }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -40,7 +42,23 @@ public function filter (Request $request) {
      */
     public function store(Request $request)
     {
-        //
+
+       
+        $requestType = $request->input('request');
+        $subject = $request->input('subject');
+        $message = $request->input('message');
+
+
+        $ticket = Ticket::create([
+            'user_id' => Auth::id(),
+            'Type' => $requestType,
+            'Subject' => $subject,
+            'Message' => $message, 
+        ]);
+
+       
+        return redirect()->back();
+
     }
 
     /**
@@ -73,5 +91,30 @@ public function filter (Request $request) {
     public function destroy(Ticket $ticket)
     {
         //
+    }
+
+
+    public function ticketshow(Request $request) {
+
+        if($request->input('filter')){
+            $tickets = Ticket::where('user_id', Auth::id())
+            ->where('priority' , $request->input('filter'))
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+        }
+        else {
+            $tickets = Ticket::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+        }
+
+       
+
+
+        foreach($tickets as $ticket){
+            $createdAtParsed = Carbon::parse($ticket->created_at)->diffForHumans();
+            $ticket->created_at_parsed = $createdAtParsed;
+        }
+        return view('client.alltickets' , compact('tickets'));
     }
 }

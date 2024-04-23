@@ -48,9 +48,20 @@
             </form>
             <i class="fa-regular text-2xl fa-bell"></i>
             <i class='bx bx-message-square-dots text-2xl'></i>
-            <div class="profile" style="background-image: url(data:image/png;base64,{{ $userinfo->image->base64 }})">
-                <a href="{{asset('assets/images/')}}"></a>
-            </div>
+           
+
+
+            @if($userinfo->image)
+                <div class="profile" style="background-image: url(data:image/png;base64,{{ $userinfo->image->base64 }})">
+                    <a href="{{asset('assets/images/')}}"></a>
+                </div>
+                @else
+                <div class="profile" style="background-color:red">
+                    <a href="{{asset('assets/images/')}}"></a>
+                </div>
+                @endif
+
+
         </div>
     </nav>
 
