@@ -8,11 +8,10 @@
     <title>FixIT</title>
 </head>
 <body>
-<div class="buttonscroll"></div>
-<section id="page1" style="height: auto;padding-bottom:3rem">
+
+<section id="page1" style="height:auto;padding-bottom:3rem">
 
 <header>
-    
 
 
 <nav>
@@ -33,7 +32,6 @@
             <h2>SERVICES</h2>
         </a>
 
-      
 
         <a class="in" href="{{route('support')}}">
             <h2>SUPPORT</h2>
@@ -61,84 +59,93 @@
 
 
 
-   
-
-
-
-
 </header> 
 
 <div class="underheader">
     <p><a href="{{route('support')}}">Submit a ticket</a> > <a class="active" href="{{route('ticketshow')}}">your tikets</a></p>
 </div>
 
-<div class="submutticket flex flex-col justify-center items-center mt-7">
+        <div class="ticketholder">
 
-    <h1>My Tickets</h1>
 
-    <div class="searchingfilter">
-        <input type="text" placeholder="SEARCH REQUEST" id="search">
+            <div class="sidepanel">
 
-        <form id="filterForm" action="{{route('ticketshow')}}" method="get">
-                <select name="filter" id="filterticket">
-                    <option value="" disabled selected>-</option>
-                    <option value="Awaiting">awaiting</option>
-                    <option value="Open">open</option>
-                    <option value="Solved">solved</option>
-                </select>
-        </form>
-    </div>
+            <div class="id">
+                <p>TICKET ID</p>
+                <h2>{{$ticket->id}}</h2>
+            </div>
 
+            <div class="created">
+                <p>CREATED</p>
+                <h2>{{$ticket->created_at}}</h2>
+            </div>
+
+            <div class="parsed">
+                <p>LAST ACTIVITY</p>
+                <h2>{{$ticket->created_at}}</h2>
+            </div>
+
+            <div class="status">
+                <p>STATUS</p>
+                <h2>{{$ticket->priority}}</h2>
+            </div>
+
+
+            </div>
+
+            <div class="containerticket">
+
+            <a href="{{route('ticketshow')}}">< SEE ALL TICKETS</a>
+            <h2>{{$ticket->Subject}}</h2>
+            <div class="messageholder">
+            <p class="message">{{$ticket->Message}}</p>
+            <hr>
+            </div>
+            
+
+            @foreach($ticket->answer as $answer)
+
+
+            
+            <div class="answerholder flex flex-col gap-3 mt-4">
+
+                <div class="replyer items-center">
+                    @if($answer->user->image)
+                    <img class="cirle" src="data:image/jpeg;base64,{{$answer->user->image->base64}}" alt="">
+                    @else
+                    <div class="cirle"></div>
+                    @endif
+
+                    <div class="infos">
+                            <h3>{{$answer->user->name}}</h3>
+                            <p>{{$answer->created_at_parsed}}</p>
+                    </div>
+                </div>
+
+            <pre>{{$answer->answer}}</pre>
+            <hr>
+            </div>
+
+
+            @endforeach
+
+
+
+            @if($ticket->priority == "Open")
+
+            <form action="" class="flex flex-col">
+                <input type="text" name="answer">
+                <button>SUBMIT</button>
+            </form>
+
+            @endif
+
+            </div>
+
+        </div>
 
 
    
-
-<div class="relative overflow-x-auto mt-8" style="width: 87vw;">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    SUBJECT
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    TICKETID
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    LAST UPDATED
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    STATUS
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            
-           @foreach($tickets as $ticket)
-
-           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <a href="{{route('ticket.show' , $ticket->id)}}">{{$ticket->Subject}}</a>
-                </th>
-                <td class="px-6 py-4">
-                    {{$ticket->id}}
-                </td>
-                <td class="px-6 py-4">
-                {{$ticket->created_at_parsed}}
-                </td>
-                <td class="px-6 py-4">
-                    {{$ticket->priority}}
-                </td>
-            </tr>
-
-           @endforeach
-           
-        </tbody>
-    </table>
-</div>
-
-<div class="pagination mt-4">
-    {{ $tickets->links() }}
-</div>
 
 </section>
 
@@ -215,94 +222,7 @@
 
 
 
-<script>
 
-
-var container = document.querySelector('tbody');
-
-let backup = container.innerHTML;
-
-
-document.getElementById('filterticket').addEventListener('change', function() {
-        document.getElementById('filterForm').submit();
-    });
-
-
-
-    document.querySelector('#search').addEventListener('input' , function() {
-        
-        Fetchsearch(this.value);
-
-    })
-
-
-    function Fetchsearch(search , page = 1) {
-
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                var response = JSON.parse(this.responseText);
-                
-                if(search == '') {
-                    container.innerHTML = backup;
-                } 
-                else {
-                    displayTickets(response.data); 
-                }
-
-                // displayPagination(response);
-            }
-        };
-        
-
-        var url = "/ticketsearch?page=" + page;
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
-        var requestData = JSON.stringify({ search: search });
-        xhr.send(requestData);
-
-    }
-
-
-    function  displayTickets(tickets) {
-    
-        container.innerHTML = '';
-        
-            tickets.forEach(ticket => {
-                let tr = document.createElement('tr');
-                tr.classList.add('bg-white', 'border-b', 'dark:bg-gray-800', 'dark:border-gray-700');
-                tr.innerHTML = `
-                
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <a href="/ticket/${ticket.id}">${ticket.Subject}</a>
-                </th>
-                <td class="px-6 py-4">
-                ${ticket.id}
-                </td>
-                <td class="px-6 py-4">
-                ${ticket.created_at_parsed}
-                </td>
-                <td class="px-6 py-4">
-                ${ticket.priority}
-                </td>
-                
-                `
-
-                container.appendChild(tr);
-            });
-
-
-            
-    }
-
-
-
-
-
-
-
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

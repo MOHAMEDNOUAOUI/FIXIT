@@ -17,4 +17,9 @@ class Ticket extends Model
         'Message',
         'priorty',
     ];
+
+
+    public function answer() {
+        return $this->hasMany(Ticket_Answer::class , 'ticket');
+    }
 }

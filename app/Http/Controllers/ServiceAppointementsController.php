@@ -40,7 +40,7 @@ class ServiceAppointementsController extends Controller
     {
 
         $currentDateTime = Carbon::now();
-        $formattedDateTime = $currentDateTime->format('l, F j, Y - h:i A');
+        // $formattedDateTime = $currentDateTime->format('l, F j, Y - h:i A');
 
         $userlocation = Location::where('user_id' , Auth::id())->first();
         
@@ -77,28 +77,21 @@ class ServiceAppointementsController extends Controller
 
 
         if ($closestUser !== null) {
-            $messageData = [
-                'from_id' => $closestUser->id, // Your user ID
-                'to_id' => Auth::id(), // ID of the closest user
-                'body' => 'Hello Sir , How can i help you', // Your message content
-                'attachment' => 'nothing',
-            ];
-
-
+           
             $clientEmail = Auth::user()->email;
+
             $depanneurEmail = $closestUser->email;
 
             $serviceDoneEmail = new ServiceDone();
 
-            Mail::to($clientEmail)->send($serviceDoneEmail);
+           
 
-            if (Chatify::newMessage($messageData)) {
+            if ( Mail::to($clientEmail)->send($serviceDoneEmail)) {
                 // Message sent successfully
                 service_appointements::create([
                     'client_id' => Auth::id(),
                     'depanneur_id' => $closestUser->id,
                     'service_type' => $metier->Metier,
-
                 ]);
 
 

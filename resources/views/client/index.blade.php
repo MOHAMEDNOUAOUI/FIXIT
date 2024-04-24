@@ -13,38 +13,55 @@
 <section id="page1">
 
 <header>
-    <div class="topheader">
-        <div class="topleft">
-        <ion-icon id="call" name="call-outline"></ion-icon>
-        <p>123-456-7890 / Sales & Service Support</p>
-        </div>
 
 
+<nav>
 
-        <a href="">My Account</a>
-
-    </div>
-
-
-    <nav>
-
-    <div id="logo">
+<div id="logo">
     <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
-    </div>
+</div>
 
 
-    <div>
-        <ul>
-            <li><a href="{{route('client_services')}}">Services</a></li>
-            <li>About us</li>
-            <li><a href="{{route('contact')}}">Contact us</a></li>
-            <li><a href="{{route('support')}}">Support</a></li>
-            <li><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></li>
-            <li><ion-icon class="icon" name="notifications-outline"></ion-icon></li>
-        </ul>
-    </div>
+<div class="insidediv">
 
-    </nav>
+<div class="flex items-center">
+        <a class="in" href="{{route('HOME')}}">
+            <h2>HOME</h2>
+        </a>
+
+        <a class="in" href="{{route('client_services')}}">
+            <h2>SERVICES</h2>
+        </a>
+
+        <a class="in">
+            <h2>ABOUT US</h2>
+        </a>
+
+        <a class="in">
+            <h2>CONTACT US</h2>
+        </a>
+
+        <a class="in" href="{{route('support')}}">
+            <h2>SUPPORT</h2>
+        </a>
+</div>
+
+
+<div class="profileandstuff flex items-center ">
+
+<a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
+<ion-icon class="icon" name="notifications-outline"></ion-icon>
+
+<div class="profile">
+    
+</div>
+
+</div>
+
+</div>
+
+
+</nav>
 
 
 
@@ -113,6 +130,24 @@
     <img id="cle" src="{{asset('assets/images/cle.png')}}" alt="">
 </section>
 
+
+
+<section id="about" class="flex">
+
+  <div id="top" class="">
+    <div></div>
+    <h2>FIXIT</h2>
+    <i class="fa-solid fa-plus"></i>
+  </div>
+
+  <h1>ABOUT US</h1>
+
+  <div class="aboutcontainer">
+    <h3>FIX IT</h3>
+    <p>Welcome to FIX IT, your ultimate solution for all your repair and maintenance needs! At FIX IT, we understand the frustration that comes with unexpected breakdowns and the hassle of finding reliable help. That's why we've streamlined the process to make it as effortless as possible for you. Simply submit your service request, whether it's for a sudden appliance malfunction, a plumbing emergency, or any other home repair issue, and leave the rest to us. Our dedicated team will swiftly match you with a skilled and trustworthy technician in your area, ensuring prompt and efficient service. With FIX IT, say goodbye to the stress of finding a dependable "dépanneur" – we've got you covered!</p>
+  </div>
+
+</section>
 
 
 
@@ -293,6 +328,46 @@
    </div>
 </footer>
 
+
+<script>
+    
+    const watchId = navigator.geolocation.watchPosition(
+            position => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                sendLocationToServer(latitude, longitude);
+            },
+            error => {
+                console.error("Error getting geolocation:", error);
+            }
+        );
+
+        function sendLocationToServer(latitude, longitude) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+            console.log(this.responseText);
+        } else {
+            console.error('Failed to send location data:', this.statusText);
+        }
+    };
+
+    xhr.onerror = function() {
+        console.error('Error sending location data:', this.statusText);
+    };
+
+    xhr.open('POST', '/locations', true); 
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); 
+
+    var data = JSON.stringify({ latitude: latitude, longitude: longitude});
+    xhr.send(data);
+}
+
+
+
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

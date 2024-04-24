@@ -66,7 +66,22 @@ public function filter (Request $request) {
      */
     public function show(Ticket $ticket)
     {
-        //
+        $ticket->load('answer.user.image');
+        
+
+        foreach($ticket->answer as $answer){
+            $createdAtFormatted = Carbon::parse($answer->created_at)->format('F d, Y H:i');
+            $answer->created_at_parsed = $createdAtFormatted;
+
+
+            if($answer->user->image){
+                $imageData = $answer->user->image->image;
+            $base64Image = base64_encode($imageData);
+            $answer->user->image->base64 = $base64Image;
+            }
+        }
+
+        return view('client.ticketresponse' , compact('ticket'));
     }
 
     /**
@@ -116,5 +131,24 @@ public function filter (Request $request) {
             $ticket->created_at_parsed = $createdAtParsed;
         }
         return view('client.alltickets' , compact('tickets'));
+    }
+
+
+
+    public function ticketsearch(Request $request) {
+
+
+        $tickets = Ticket::where('user_id', Auth::id())
+            ->where('Subject', 'like', '%' . $request->input('search') . '%')
+            ->orderBy('created_at', 'desc')
+            ->paginate(6);
+
+            foreach($tickets as $ticket){
+                $createdAtParsed = Carbon::parse($ticket->created_at)->diffForHumans();
+                $ticket->created_at_parsed = $createdAtParsed;
+            }
+
+            
+            return response()->json($tickets);
     }
 }

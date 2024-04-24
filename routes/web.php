@@ -33,10 +33,10 @@ Route::group(['prefix' => '/auth'], function () {
 Route::middleware([ClientMiddleware::class ,'auth'])->group(function () {
     Route::get('/', [ClientController::class  , 'index'])->name('HOME');
     Route::get('/services' , [ClientController::class , 'services'])->name('client_services');
-    Route::get('/contact' , [ClientController::class , 'contact'])->name('contact');
     Route::resource('reservation' , ServiceAppointementsController::class);
     Route::get('/support' , [ClientController::class , 'support'])->name('support');
     Route::get('/ticketshow' , [TicketController::class , 'ticketshow'])->name('ticketshow');
+    Route::POST('/ticketsearch' , [TicketController::class , 'ticketsearch'])->name('ticketsearch');
     Route::resource('ticket' , TicketController::class);
 });
 

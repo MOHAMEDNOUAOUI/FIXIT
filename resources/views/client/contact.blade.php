@@ -12,38 +12,56 @@
 <section id="page1" style="height: auto;padding-bottom:3rem">
 
 <header>
-    <div class="topheader">
-        <div class="topleft">
-        <ion-icon id="call" name="call-outline"></ion-icon>
-        <p>123-456-7890 / Sales & Service Support</p>
-        </div>
+    
+
+<nav>
+
+<div id="logo">
+    <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
+</div>
 
 
+<div class="insidediv">
 
-        <a href="">My Account</a>
+<div class="flex items-center">
+        <a class="in" href="{{route('HOME')}}">
+            <h2>HOME</h2>
+        </a>
 
-    </div>
+        <a class="in" href="{{route('client_services')}}">
+            <h2>SERVICES</h2>
+        </a>
+
+        <a class="in">
+            <h2>ABOUT US</h2>
+        </a>
+
+        <a class="in" href="{{route('contact')}}">
+            <h2>CONTACT US</h2>
+        </a>
+
+        <a class="in" href="{{route('support')}}">
+            <h2>SUPPORT</h2>
+        </a>
+</div>
 
 
-    <nav>
+<div class="profileandstuff flex items-center ">
 
-    <div id="logo">
-        <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
-    </div>
+<a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
+<ion-icon class="icon" name="notifications-outline"></ion-icon>
+
+<div class="profile">
+    
+</div>
+
+</div>
+
+</div>
 
 
-    <div>
-        <ul>
-            <li><a href="{{route('client_services')}}">Services</a></li>
-            <li>About us</li>
-            <li class="active">Contact us</li>
-            <li ><a href="{{route('support')}}">Support</a></li>
-            <li><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></li>
-            <li><ion-icon class="icon" name="notifications-outline"></ion-icon></li>
-        </ul>
-    </div>
+</nav>
 
-    </nav>
 
 </header> 
 
@@ -131,6 +149,16 @@
         <p>&copy;2024 Fixit , All right reserved.</p>
    </div>
 </footer>
+
+
+
+<script>
+
+
+document.getElementsByName
+
+
+</script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

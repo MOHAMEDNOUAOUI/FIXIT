@@ -17,7 +17,10 @@ class DepanneurController extends Controller
      */
     public function index()
     {
-        $ClientCount = Client::count();
+
+
+
+        
         $DeppaneurCount = Depanneur::count();
         $TicketsCount = Ticket::where('user_id' , Auth::id())->count();
         $userinfo = User::with(['image', 'depanneur'])->where('id', Auth::id())->first();
@@ -26,6 +29,9 @@ class DepanneurController extends Controller
             $base64Image = base64_encode($imageData);
             $userinfo->image->base64 = $base64Image;
         }
+
+
+        $ClientCount = service_appointements::where('depanneur_id' , $userinfo->depanneur->id)->count('client_id');
         
 
         return view('Depaneur.index' , compact('ClientCount' , 'DeppaneurCount' , 'TicketsCount' , 'userinfo'));

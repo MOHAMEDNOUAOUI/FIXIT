@@ -63,4 +63,10 @@ class User extends Authenticatable
     public function location() {
         return $this->hasOne(Location::class);
     }
+
+
+
+    public function answer_ticket() {
+        return $this->hasMany(User::class , 'replyer');
+    }
 }

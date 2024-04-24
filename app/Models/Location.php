@@ -15,6 +15,7 @@ class Location extends Model
         'user_id',
         'latitude',
         'longitude',
+        'Address',
     ];
 
 

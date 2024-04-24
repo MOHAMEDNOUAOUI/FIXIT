@@ -20,38 +20,49 @@
 
 
 <header>
-    <div class="topheader">
-        <div class="topleft">
-        <ion-icon id="call" name="call-outline"></ion-icon>
-        <p>123-456-7890 / Sales & Service Support</p>
-        </div>
+    
 
 
+<nav>
 
-        <a href="">My Account</a>
-
-    </div>
-
-
-    <nav>
-
-    <div id="logo">
+<div id="logo">
     <a href="{{route('HOME')}}"><img src="{{asset ('assets/images/logo1.png')}}" alt=""></a>
-    </div>
+</div>
 
 
-    <div>
-        <ul>
-            <li class="active"><a href="{{route('client_services')}}">Services</a></li>
-            <li>About us</li>
-            <li>Contact us</li>
-            <li><a href="{{route('support')}}">Support</a></li>
-            <li><a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a></li>
-            <li><ion-icon class="icon" name="notifications-outline"></ion-icon></li>
-        </ul>
-    </div>
+<div class="insidediv">
 
-    </nav>
+<div class="flex items-center">
+        <a class="in" href="{{route('HOME')}}">
+            <h2>HOME</h2>
+        </a>
+
+        <a class="in" href="{{route('client_services')}}">
+            <h2>SERVICES</h2>
+        </a>
+
+
+        <a class="in" href="{{route('support')}}">
+            <h2>SUPPORT</h2>
+        </a>
+</div>
+
+
+<div class="profileandstuff flex items-center ">
+
+<a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
+<ion-icon class="icon" name="notifications-outline"></ion-icon>
+
+<div class="profile">
+    
+</div>
+
+</div>
+
+</div>
+
+
+</nav>
 
 
 
@@ -155,39 +166,39 @@
 
 
 <script>
-        const watchId = navigator.geolocation.watchPosition(
-            position => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                sendLocationToServer(latitude, longitude);
-            },
-            error => {
-                console.error("Error getting geolocation:", error);
-            }
-        );
+//         const watchId = navigator.geolocation.watchPosition(
+//             position => {
+//                 const latitude = position.coords.latitude;
+//                 const longitude = position.coords.longitude;
+//                 sendLocationToServer(latitude, longitude);
+//             },
+//             error => {
+//                 console.error("Error getting geolocation:", error);
+//             }
+//         );
 
-        function sendLocationToServer(latitude, longitude) {
-    var xhr = new XMLHttpRequest();
+//         function sendLocationToServer(latitude, longitude) {
+//     var xhr = new XMLHttpRequest();
 
-    xhr.onload = function() {
-        if (this.status === 200) {
-            console.log(this.responseText);
-        } else {
-            console.error('Failed to send location data:', this.statusText);
-        }
-    };
+//     xhr.onload = function() {
+//         if (this.status === 200) {
+//             console.log(this.responseText);
+//         } else {
+//             console.error('Failed to send location data:', this.statusText);
+//         }
+//     };
 
-    xhr.onerror = function() {
-        console.error('Error sending location data:', this.statusText);
-    };
+//     xhr.onerror = function() {
+//         console.error('Error sending location data:', this.statusText);
+//     };
 
-    xhr.open('POST', '/locations', true); 
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); 
+//     xhr.open('POST', '/locations', true); 
+//     xhr.setRequestHeader('Content-Type', 'application/json');
+//     xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); 
 
-    var data = JSON.stringify({ latitude: latitude, longitude: longitude });
-    xhr.send(data);
-}
+//     var data = JSON.stringify({ latitude: latitude, longitude: longitude });
+//     xhr.send(data);
+// }
 
 
 
