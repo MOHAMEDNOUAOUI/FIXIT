@@ -27,4 +27,9 @@ class Depanneur extends Model
     {
         return $this->hasMany(service_appointements::class);
     }
+
+
+    public function rating() {
+        return $this->hasMany(Depanneur_ratings::class);
+    }
 }

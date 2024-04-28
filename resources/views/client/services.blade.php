@@ -3,11 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('assets/css/client/home.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <title>FixIT</title>
 </head>
 <body >
+
+
+
+<div class="notificationcontainer">
+        <div class="topnot">
+            <!-- <i id="closenotification" onclick="closenotif()"   class="fa-solid fa-xmark"></i> -->
+            <h1>Notification<span>{{count($notifications)}}</span></h1>
+        </div>
+
+        <div class="restofit">
+
+        @foreach($notifications as $notification)
+
+        <div class="notification">
+                <div class="leftnot">
+                    <div class="prof"  style="{{ isset($notification->sendernot->image->base64) ? 'background-image: url(data:image/png;base64,'.$notification->sendernot->image->base64.')' : 'background-color: grey;' }}"></div>
+                </div>
+                <div class="rightnot flex">
+                    <div>
+                    <p>{{$notification->message}}</p>
+                    <h2>time</h2>
+                    </div>
+                    
+                    <h3 id="x" data-id="{{$notification->id}}">x</h3>
+                </div>
+            </div>
+
+
+        @endforeach
+
+            
+
+        </div>
+    </div>
+
+
 
 @if(session('status'))
     <div class="alert alert-success">
@@ -51,7 +88,7 @@
 <div class="profileandstuff flex items-center ">
 
 <a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
-<ion-icon class="icon" name="notifications-outline"></ion-icon>
+<ion-icon class="icon" id="notificationtrigger" name="notifications-outline"></ion-icon>
 
 <div class="profile">
     
@@ -163,45 +200,11 @@
 
 
 
-
+<script>
+    const destroyNotificationUrl = "{{ route('notification.destroy', ['notification' => ':notificationId']) }}";
+</script>
 
 <script>
-//         const watchId = navigator.geolocation.watchPosition(
-//             position => {
-//                 const latitude = position.coords.latitude;
-//                 const longitude = position.coords.longitude;
-//                 sendLocationToServer(latitude, longitude);
-//             },
-//             error => {
-//                 console.error("Error getting geolocation:", error);
-//             }
-//         );
-
-//         function sendLocationToServer(latitude, longitude) {
-//     var xhr = new XMLHttpRequest();
-
-//     xhr.onload = function() {
-//         if (this.status === 200) {
-//             console.log(this.responseText);
-//         } else {
-//             console.error('Failed to send location data:', this.statusText);
-//         }
-//     };
-
-//     xhr.onerror = function() {
-//         console.error('Error sending location data:', this.statusText);
-//     };
-
-//     xhr.open('POST', '/locations', true); 
-//     xhr.setRequestHeader('Content-Type', 'application/json');
-//     xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}'); 
-
-//     var data = JSON.stringify({ latitude: latitude, longitude: longitude });
-//     xhr.send(data);
-// }
-
-
-
 
 document.querySelectorAll('#orderButton').forEach((element) => {
     element.addEventListener('click', function() {
@@ -253,6 +256,8 @@ document.querySelectorAll('#orderButton').forEach((element) => {
 
 
 </script>
+
+<script src="{{asset('js/notifications.js')}}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Depanneur;
+use App\Models\Depanneur_ratings;
+use App\Models\Notification;
 use App\Models\service_appointements;
 use App\Models\Ticket;
 use App\Models\User;
@@ -18,10 +20,12 @@ class DepanneurController extends Controller
     public function index()
     {
 
+        $notifications = Notification::with(['recievernot' , 'sendernot'])->get();
 
-
+        $RatingsCount = Depanneur_ratings::count();
         
         $DeppaneurCount = Depanneur::count();
+        
         $TicketsCount = Ticket::where('user_id' , Auth::id())->count();
         $userinfo = User::with(['image', 'depanneur'])->where('id', Auth::id())->first();
         if ($userinfo->image) {
@@ -31,10 +35,12 @@ class DepanneurController extends Controller
         }
 
 
-        $ClientCount = service_appointements::where('depanneur_id' , $userinfo->depanneur->id)->count('client_id');
+        $ClientCount = service_appointements::where('depanneur_id' , $userinfo->depanneur->id)->groupBy('client_id')->get()->count();
         
+        $servicecount = service_appointements::where('depanneur_id' , $userinfo->depanneur->id)->count('id');
 
-        return view('Depaneur.index' , compact('ClientCount' , 'DeppaneurCount' , 'TicketsCount' , 'userinfo'));
+
+        return view('Depaneur.index' , compact('ClientCount' , 'notifications' , 'DeppaneurCount' , 'TicketsCount' , 'userinfo' , 'servicecount' , 'RatingsCount'));
     }
 
     public function services(request $request) {
@@ -45,40 +51,19 @@ class DepanneurController extends Controller
         $depannuerId = Depanneur::where('user_id' , $userinfo->id)->first();
         
 
-        if($request->has('Pending')){
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
-    ->where('depanneur_id', $depannuerId->id)
-    ->where('status' , 'pending')
-    ->paginate(10);
-        }
-        elseif($request->has('On')){
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
-    ->where('depanneur_id', $depannuerId->id)
-    ->where('status' , 'ongoing')
-    ->paginate(10);
-        }
-        elseif($request->has('Payed')){
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
-    ->where('depanneur_id', $depannuerId->id)
-    ->where('status' , 'payed')
-    ->paginate(10);
-        }
-        elseif($request->has('new')){
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
-    ->where('depanneur_id', $depannuerId->id)
-    ->orderBy ('created_at', 'desc')
-    ->paginate(10);
-        }
-        elseif($request->has('old')) {
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
+        $notifications = Notification::with(['recievernot' , 'sendernot'])->get();
+
+      
+            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image' , 'client.user.location'])
             ->where('depanneur_id', $depannuerId->id)
-            ->paginate(10);
-        }
-        else {
-            $appointements = service_appointements::with(['client.user.image', 'depanneur.user.image'])
-            ->where('depanneur_id', $depannuerId->id)
-            ->paginate(10);
-        }
+            ->orderByDesc('created_at')
+            ->get();
+
+
+            
+        
+
+
 
 
     foreach ($appointements as $appointment) {
@@ -90,32 +75,23 @@ class DepanneurController extends Controller
     }
 
 
-        return view ('Depaneur.services' , compact('userinfo' , 'appointements'));
+        return view ('Depaneur.services' , compact('userinfo' , 'appointements' , 'notifications'));
     }
 
-    public function Rating() {
-
-        $userinfo = User::with('image')->where('id' , Auth::id())->first();
-
-       
-        if ($userinfo->image) {
-            $imageData = $userinfo->image->image;
-            $base64Image = base64_encode($imageData);
-            $userinfo->image->base64 = $base64Image;
-        }
-        return view ('Depaneur.Rating' , compact('userinfo'));
-    }
 
 
 
     public function Available(Request $request) {
+
+
         $Depanneur = Depanneur::where('user_id' , Auth::id())->first();
-       if($Depanneur->status == 'Available'){
-        $Depanneur->status = "Not_Available";
+        
+       if($Depanneur->status == 'available'){
+        $Depanneur->status = "notavailable";
         $Depanneur->save();
        }
        else {
-        $Depanneur->status = 'Available';
+        $Depanneur->status = 'available';
         $Depanneur->save();
        }
 

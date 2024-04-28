@@ -4,10 +4,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DepanneurController;
+use App\Http\Controllers\DepanneurRatingsController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Metier;
 use App\Http\Controllers\MetierController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ServiceAppointementsController;
+use App\Http\Controllers\TicketAnswerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,15 +33,23 @@ Route::group(['prefix' => '/auth'], function () {
 
 
 
+
+
+
 Route::middleware([ClientMiddleware::class ,'auth'])->group(function () {
     Route::get('/', [ClientController::class  , 'index'])->name('HOME');
     Route::get('/services' , [ClientController::class , 'services'])->name('client_services');
+    Route::get('/appointements' , [ClientController::class , 'appointement'])->name('client_appointements');
     Route::resource('reservation' , ServiceAppointementsController::class);
     Route::get('/support' , [ClientController::class , 'support'])->name('support');
     Route::get('/ticketshow' , [TicketController::class , 'ticketshow'])->name('ticketshow');
     Route::POST('/ticketsearch' , [TicketController::class , 'ticketsearch'])->name('ticketsearch');
     Route::resource('ticket' , TicketController::class);
+    Route::resource('ticketanswer' , TicketAnswerController::class);
+    Route::resource('Rating' , DepanneurRatingsController::class);
 });
+
+
 
 Route::middleware([AdminMiddleware::class , 'auth'])->group(function () {
     Route::get('/MetierAdmin/services/add' , [MetierController::class , 'add_admin'])->name('admin.services.add');
@@ -69,9 +80,17 @@ Route::post('/locations', [LocationController::class, 'store'])
     ->name('locations.store')
     ->middleware('auth');
 
-Route::middleware([DepanneurMiddleware::class , 'auth'])->group(function () {
+    Route::get('/profile', [AuthController::class, 'profile'])
+    ->name('profile')
+    ->middleware('auth');
+
+    Route::resource('notification' , NotificationController::class)->middleware('auth');
+    Route::post('/reservation/filter' , [ServiceAppointementsController::class , 'filtering'])->name('filtering')->middleware('auth');
+
+Route::middleware([DepanneurMiddleware::class , 'auth'])->group(function () { 
+    Route::post('/res/status' , [ServiceAppointementsController::class , 'statusupdate'])->name('statusupdate');
     Route::get('/Depanneur/services' , [DepanneurController::class , 'services'])->name('Depanneur.services');
-    Route::get('/Depanneur/Rating' , [DepanneurController::class , 'Rating'])->name('Depanneur.Rating');
+   
     Route::post('/Depanneur/availability', [DepanneurController::class , 'Available'])->name('available');
     Route::resource('Depanneur' , DepanneurController::class);
 });

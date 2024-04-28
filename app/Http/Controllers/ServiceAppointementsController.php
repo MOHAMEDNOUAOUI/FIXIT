@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderConfirmation;
 use App\Mail\ServiceDone;
+use App\Models\Client;
 use App\Models\Depanneur;
 use App\Models\Location;
 use App\Models\Metier;
+use App\Models\Notification;
 use App\Models\service_appointements;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+
+use function Laravel\Prompts\select;
 
 class ServiceAppointementsController extends Controller
 {
@@ -24,6 +28,8 @@ class ServiceAppointementsController extends Controller
     {
         //
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +45,6 @@ class ServiceAppointementsController extends Controller
     public function store(Request $request)
     {
 
-        $currentDateTime = Carbon::now();
         // $formattedDateTime = $currentDateTime->format('l, F j, Y - h:i A');
 
         $userlocation = Location::where('user_id' , Auth::id())->first();
@@ -82,25 +87,35 @@ class ServiceAppointementsController extends Controller
 
             $depanneurEmail = $closestUser->email;
 
-            $serviceDoneEmail = new ServiceDone();
+            $depanneurId = Depanneur::where('user_id' , $closestUser->id)->first();
 
+            $clientid = Client::where('user_id' , Auth::id())->first();
            
 
-            if ( Mail::to($clientEmail)->send($serviceDoneEmail)) {
                 // Message sent successfully
                 service_appointements::create([
-                    'client_id' => Auth::id(),
-                    'depanneur_id' => $closestUser->id,
+                    'client_id' => $clientid->id,
+                    'depanneur_id' => $depanneurId->id,
                     'service_type' => $metier->Metier,
                 ]);
+
+                Notification::create([
+                    'reciever' => Auth::id(), // Assuming receiver is the client
+                    'sender' => $closestUser->id, // Assuming sender is the service provider
+                    'message' => 'Your service appointment for ' . $metier->Metier . ' has been booked successfully.',
+                ]);
+
+                Notification::create([
+                    'reciever' => $closestUser->id, // Assuming receiver is the client
+                    'sender' => Auth::id(), // Assuming sender is the service provider
+                    'message' => '' . $clientid->name .' has booked a service from you for ' . $metier->Metier . '',
+                ]);
+                
 
 
                 $success = true;
                 return response()->json(['success' => $success]);
-            } else {
-                // Failed to send message
-                return response()->json('Failed to send message', 500);
-            }
+
             
         } else {
             return response()->json( 'No users found.');
@@ -108,15 +123,19 @@ class ServiceAppointementsController extends Controller
 
 
 
-
     }
 
+
+    
     /**
      * Display the specified resource.
      */
-    public function show(service_appointements $service_appointements)
-    {
-        //
+    
+
+    public function filtering(Request $request) {
+        
+        $service = service_appointements::with(['client.user.location' , 'depanneur.user.location'])->where('id' , $request->input('id'))->first();
+        return $service;
     }
 
     /**
@@ -125,6 +144,31 @@ class ServiceAppointementsController extends Controller
     public function edit(service_appointements $service_appointements)
     {
         //
+    }
+
+    public function statusupdate (Request $request) {
+        $id = $request->input('id');
+        $status = $request->input('status');
+
+        $appointe = service_appointements::where('id' , $id)->first();
+        $appointe->status = $status;
+        $appointe->save();
+
+
+        $userclient = client::where('id' , $appointe->client_id)->with('user')->first();
+
+        $userdepanneur = User::where('id' , Auth::id())->first();
+
+        if($status == "paid") {
+           Notification::create([
+                'reciever' => $userclient->user->id,
+                'sender' => Auth::id(),
+                'message' => "{$userdepanneur->name} has changed your reservation status to paid",
+            ]);
+        }
+
+
+        return redirect()->back();
     }
 
     /**

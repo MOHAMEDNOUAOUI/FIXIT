@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,9 +47,16 @@ class LocationController extends Controller
                ]);
         }
 
+
+        $closestDepanneurs = User::select('users.id', 'users.name', 'locations.latitude', 'locations.longitude')
+        ->join('locations', 'users.id', '=', 'locations.user_id')
+        ->join('depanneurs' , 'users.id' , '=' , 'depanneurs.user_id')
+        ->orderByRaw('POWER(locations.latitude - ?, 2) + POWER(locations.longitude - ?, 2)', [$request->latitude, $request->longitude])
+        ->limit(4)
+        ->get();
        
 
-        return "yes";
+        return response()->json(['status' => 'success', 'closest_depanneurs' => $closestDepanneurs]);
     }
 
     /**

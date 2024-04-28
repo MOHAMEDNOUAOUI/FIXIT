@@ -3,11 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('assets/css/client/home.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <title>FixIT</title>
 </head>
 <body>
+
+
+
+
+<div class="notificationcontainer">
+        <div class="topnot">
+            <!-- <i id="closenotification" onclick="closenotif()"   class="fa-solid fa-xmark"></i> -->
+            <h1>Notification<span>{{count($notifications)}}</span></h1>
+        </div>
+
+        <div class="restofit">
+
+        @foreach($notifications as $notification)
+
+        <div class="notification">
+                <div class="leftnot">
+                    <div class="prof"  style="{{ isset($notification->sendernot->image->base64) ? 'background-image: url(data:image/png;base64,'.$notification->sendernot->image->base64.')' : 'background-color: grey;' }}"></div>
+                </div>
+                <div class="rightnot flex">
+                    <div>
+                    <p>{{$notification->message}}</p>
+                    <h2>time</h2>
+                    </div>
+                    
+                    <h3 id="x" data-id="{{$notification->id}}">x</h3>
+                </div>
+            </div>
+
+
+        @endforeach
+
+            
+
+        </div>
+    </div>
+
+
+
+
+
 <div class="buttonscroll"></div>
 <section id="page1" style="height: auto;padding-bottom:3rem">
 
@@ -43,7 +84,7 @@
 <div class="profileandstuff flex items-center ">
 
 <a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
-<ion-icon class="icon" name="notifications-outline"></ion-icon>
+<ion-icon class="icon" id="notificationtrigger" name="notifications-outline"></ion-icon>
 
 <div class="profile">
     
@@ -83,33 +124,47 @@ Submit a Ticket! So long as it doesn't fall through a portal, we'll get back to 
 <h2>Details</h2>
 <div class="underline"></div>
 
-<form action="{{route('ticket.store')}}" method="post" class="mt-2 flex flex-col gap-3">
-@csrf
+<form action="{{ route('ticket.store') }}" method="post" class="mt-2 flex flex-col gap-3">
+    @csrf
 
-<div class="request flex flex-col">
-    <label for="requset" style="font-size: 0.7rem;">1.CHOOSE A REQUEST TYPE</label>
-    <select name="request" id="request">
-        <option value="" selected disabled>-</option>
-        <option value="Technical Issue">Technical Issue</option>
-        <option value="Service Inquiry">Service Inquiry</option>
-        <option value="Appointment Booking">Appointment Booking</option>
-</select>
-</div>
+    <!-- Request Type -->
+    <div class="request flex flex-col">
+        <label for="request" style="font-size: 0.7rem;">1. CHOOSE A REQUEST TYPE</label>
+        <select name="request" id="request">
+            <option value="" selected disabled>-</option>
+            <option value="Technical Issue">Technical Issue</option>
+            <option value="Service Inquiry">Service Inquiry</option>
+            <option value="Appointment Booking">Appointment Booking</option>
+        </select>
+        @error('request')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
 
-<div class="subject flex flex-col">
-    <label for="subject" style="font-size: 0.8rem;">Subject</label>
-    <input type="text" name="subject">
-</div>
+    <!-- Subject -->
+    <div class="subject flex flex-col">
+        <label for="subject" style="font-size: 0.8rem;">Subject</label>
+        <input type="text" value="{{ old('subject') }}" name="subject">
+        @error('subject')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
 
-<div class="message flex flex-col">
-    <label for="message" style="font-size: 0.8rem;">Message</label>
-    <textarea name="message" id="message" cols="30" rows="1"></textarea>
-</div>
+    <!-- Message -->
+    <div class="message flex flex-col">
+        <label for="message" style="font-size: 0.8rem;">Message</label>
+        <textarea name="message" id="message" cols="30" rows="1">{{ old('message') }}</textarea>
+        @error('message')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
+    </div>
 
+   
 
-<button class="mt-7">SUBMIT</button>
-
+    <!-- Submit Button -->
+    <button class="mt-7">SUBMIT</button>
 </form>
+
 
 
 
@@ -188,6 +243,10 @@ Submit a Ticket! So long as it doesn't fall through a portal, we'll get back to 
 </footer>
 
 
+<script>
+    const destroyNotificationUrl = "{{ route('notification.destroy', ['notification' => ':notificationId']) }}";
+</script>
+<script src="{{asset('js/notifications.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

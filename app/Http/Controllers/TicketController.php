@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
 {
@@ -14,8 +16,18 @@ class TicketController extends Controller
      */
    public function index(Request $request)
 {
+    $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+
+        foreach($notifications as $notification){
+            if ($notification->sendernot->image) {
+                $imageData = $notification->sendernot->image->image;
+                $base64Image = base64_encode($imageData);
+                $notification->sendernot->image->base64 = $base64Image;
+            }
+        }
+
         $tickets = Ticket::paginate(10);
-    return view('admin.Tickets.index', compact('tickets'));
+    return view('admin.Tickets.index', compact('tickets' , 'notifications'));
 }
 
 public function filter (Request $request) {
@@ -42,23 +54,28 @@ public function filter (Request $request) {
      */
     public function store(Request $request)
     {
-
-       
-        $requestType = $request->input('request');
-        $subject = $request->input('subject');
-        $message = $request->input('message');
-
-
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'request' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+    
+        // If validation fails, redirect back with errors
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
+        // If validation passes, create the ticket
         $ticket = Ticket::create([
             'user_id' => Auth::id(),
-            'Type' => $requestType,
-            'Subject' => $subject,
-            'Message' => $message, 
+            'Type' => $request->input('request'),
+            'Subject' => $request->input('subject'),
+            'Message' => $request->input('message'), 
         ]);
-
-       
-        return redirect()->back();
-
+    
+        // Redirect back with success message or any other logic
+        return redirect()->back()->with('success', 'Ticket created successfully!');
     }
 
     /**
@@ -66,8 +83,15 @@ public function filter (Request $request) {
      */
     public function show(Ticket $ticket)
     {
+
+        if($ticket->user_id != Auth::id()){
+            abort(403);
+        }
+
         $ticket->load('answer.user.image');
         
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+
 
         foreach($ticket->answer as $answer){
             $createdAtFormatted = Carbon::parse($answer->created_at)->format('F d, Y H:i');
@@ -81,7 +105,7 @@ public function filter (Request $request) {
             }
         }
 
-        return view('client.ticketresponse' , compact('ticket'));
+        return view('client.ticketresponse' , compact('ticket' , 'notifications'));
     }
 
     /**
@@ -117,20 +141,29 @@ public function filter (Request $request) {
             ->orderBy('created_at', 'desc')
             ->paginate(6);
         }
+
         else {
             $tickets = Ticket::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->paginate(6);
         }
 
-       
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+
+        foreach($notifications as $notification){
+            if ($notification->sendernot->image) {
+                $imageData = $notification->sendernot->image->image;
+                $base64Image = base64_encode($imageData);
+                $notification->sendernot->image->base64 = $base64Image;
+            }
+        }
 
 
         foreach($tickets as $ticket){
             $createdAtParsed = Carbon::parse($ticket->created_at)->diffForHumans();
             $ticket->created_at_parsed = $createdAtParsed;
         }
-        return view('client.alltickets' , compact('tickets'));
+        return view('client.alltickets' , compact('tickets' , 'notifications'));
     }
 
 

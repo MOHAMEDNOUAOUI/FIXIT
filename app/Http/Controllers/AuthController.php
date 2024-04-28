@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Client;
 use App\Models\Depanneur;
+use App\Models\Metier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,6 +73,18 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+
+
+    public function profile () {
+        $user = User::where('id' , Auth::id())->with(['image' , 'client', 'depanneur.metiers'])->first();
+        $metiers = Metier::get();
+        if($user->image) {
+            $imageData = $user->image->image;
+            $base64Image = base64_encode($imageData);
+            $user->image->base64 = $base64Image;
+        }
+            return view ('Auth.profile' , compact('user' , 'metiers'));
+    }
 
 
 }

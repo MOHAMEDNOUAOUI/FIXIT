@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket_Answer;
+use App\Models\Notification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class TicketAnswerController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+            
     }
 
     /**
@@ -29,23 +28,13 @@ class TicketAnswerController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->input('answer')) {
-           Ticket_Answer::create([
-            'ticket' => $request->input('ticketid'),
-            'replyer' => Auth::id(),
-            'answer' => $request->input('answer'),
-           ]);
-        }
-
-
-        return redirect()->back();
+        //
     }
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(Ticket_Answer $ticket_Answer)
+    public function show(Notification $notification)
     {
         //
     }
@@ -53,7 +42,7 @@ class TicketAnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ticket_Answer $ticket_Answer)
+    public function edit(Notification $notification)
     {
         //
     }
@@ -61,7 +50,7 @@ class TicketAnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Ticket_Answer $ticket_Answer)
+    public function update(Request $request, Notification $notification)
     {
         //
     }
@@ -69,8 +58,10 @@ class TicketAnswerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ticket_Answer $ticket_Answer)
+    public function destroy(Notification $notification)
     {
-        //
+        $notification->delete();
+        // Return a response, maybe a JSON response if you're using AJAX
+        return response()->json(['message' => 'Notification deleted successfully']);
     }
 }

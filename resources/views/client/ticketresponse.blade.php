@@ -3,11 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('assets/css/client/home.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <title>FixIT</title>
 </head>
 <body>
+
+
+<div class="notificationcontainer">
+        <div class="topnot">
+            <!-- <i id="closenotification" onclick="closenotif()"   class="fa-solid fa-xmark"></i> -->
+            <h1>Notification<span>{{count($notifications)}}</span></h1>
+        </div>
+
+        <div class="restofit">
+
+        @foreach($notifications as $notification)
+
+        <div class="notification">
+                <div class="leftnot">
+                    <div class="prof"  style="{{ isset($notification->sendernot->image->base64) ? 'background-image: url(data:image/png;base64,'.$notification->sendernot->image->base64.')' : 'background-color: grey;' }}"></div>
+                </div>
+                <div class="rightnot flex">
+                    <div>
+                    <p>{{$notification->message}}</p>
+                    <h2>time</h2>
+                    </div>
+                    
+                    <h3 id="x" data-id="{{$notification->id}}">x</h3>
+                </div>
+            </div>
+
+
+        @endforeach
+
+            
+
+        </div>
+    </div>
+
+
+
 
 <section id="page1" style="height:auto;padding-bottom:3rem">
 
@@ -42,7 +79,7 @@
 <div class="profileandstuff flex items-center ">
 
 <a href="/chatify"><ion-icon class="icon" name="file-tray-full-outline"></ion-icon></a>
-<ion-icon class="icon" name="notifications-outline"></ion-icon>
+<ion-icon class="icon" id="notificationtrigger" name="notifications-outline"></ion-icon>
 
 <div class="profile">
     
@@ -133,10 +170,13 @@
 
             @if($ticket->priority == "Open")
 
-            <form action="" class="flex flex-col">
-                <input type="text" name="answer">
-                <button>SUBMIT</button>
-            </form>
+            <form action="{{ route('ticketanswer.store')}}" method="POST" class="flex flex-col">
+            @csrf
+            <input type="text" name="answer">
+            <input type="hidden" name="ticketid" value="{{$ticket->id}}">
+            <button type="submit">SUBMIT</button>
+        </form>
+
 
             @endif
 
@@ -222,7 +262,10 @@
 
 
 
-
+<script>
+    const destroyNotificationUrl = "{{ route('notification.destroy', ['notification' => ':notificationId']) }}";
+</script>
+<script src="{{asset('js/notifications.js')}}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
