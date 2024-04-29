@@ -26,9 +26,20 @@ class TicketController extends Controller
             }
         }
 
-        $tickets = Ticket::paginate(10);
+        $tickets = Ticket::orderBy('created_at', 'desc')
+        ->paginate(4);
+
+        foreach($tickets as $ticket){
+            $createdAtParsed = Carbon::parse($ticket->updated_at)->diffForHumans();
+            $ticket->created_at_parsed = $createdAtParsed;
+        }
+
+
     return view('admin.Tickets.index', compact('tickets' , 'notifications'));
 }
+
+
+
 
 public function filter (Request $request) {
     if ($request->has('low')) {
@@ -168,6 +179,72 @@ public function filter (Request $request) {
 
 
 
+
+    public function ticketshowadmin(Request $request) {
+        if($request->input('filter')){
+            $tickets = Ticket::
+            where('priority' , $request->input('filter'))
+            ->orderBy('created_at', 'desc')
+            ->paginate(4);
+        }
+        else {
+            $tickets = Ticket::orderBy('created_at', 'desc')
+            ->paginate(4);
+        }
+
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+
+        foreach($notifications as $notification){
+            if ($notification->sendernot->image) {
+                $imageData = $notification->sendernot->image->image;
+                $base64Image = base64_encode($imageData);
+                $notification->sendernot->image->base64 = $base64Image;
+            }
+        }
+
+
+        foreach($tickets as $ticket){
+            $createdAtParsed = Carbon::parse($ticket->created_at)->diffForHumans();
+            $ticket->created_at_parsed = $createdAtParsed;
+        }
+
+        return view('admin.tickets.index' , compact('tickets'));
+    }
+
+
+
+
+    public function ticketpage($id) {
+        $ticket = Ticket::where('id' , $id)->with('answer.user.image')->first();
+
+
+        foreach($ticket->answer as $answer){
+            $createdAtFormatted = Carbon::parse($answer->created_at)->format('F d, Y H:i');
+            $answer->created_at_parsed = $createdAtFormatted;
+
+
+            if($answer->user->image){
+                $imageData = $answer->user->image->image;
+            $base64Image = base64_encode($imageData);
+            $answer->user->image->base64 = $base64Image;
+            }
+        }
+
+        return view('admin.tickets.ticket' , compact('ticket'));
+    }       
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function ticketsearch(Request $request) {
 
 
@@ -183,5 +260,20 @@ public function filter (Request $request) {
 
             
             return response()->json($tickets);
+    }
+
+
+    public function ticketsearchadmin(Request $request) {
+        $tickets = Ticket::where('Subject', 'like', '%' . $request->input('search') . '%')
+        ->orderBy('created_at', 'desc')
+        ->paginate(6);
+
+        foreach($tickets as $ticket){
+            $createdAtParsed = Carbon::parse($ticket->created_at)->diffForHumans();
+            $ticket->created_at_parsed = $createdAtParsed;
+        }
+
+        
+        return response()->json($tickets);
     }
 }

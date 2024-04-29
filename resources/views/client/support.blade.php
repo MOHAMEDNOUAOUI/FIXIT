@@ -73,7 +73,9 @@
             <h2>SERVICES</h2>
         </a>
 
-       
+        <a class="in" href="{{route('client_appointements')}}">
+                            <h2>APPOINTEMENTS</h2>
+                        </a>
 
         <a class="in" href="{{route('support')}}">
             <h2>SUPPORT</h2>

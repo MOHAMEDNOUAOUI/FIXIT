@@ -25,19 +25,23 @@
             <span>Analytics</span></a>
         </li>
 
-        <li>   
-        <a class="flex items-center" href="{{route('index_Customers')}}">
+        <li>
+        <a href="{{route('client_Customers')}}" class="flex items-center">
         <img src="{{asset('assets/images/customer.png')}}" alt="">
-            <span>Customers</span></a>
-        </li>
+        <span>Customers</span>
+    </a>
+       
+    </li>
 
         <!-- <li><img src="{{asset('assets/images/info.png')}}" alt="">
             <span>Support</span>
         </li> -->
 
-        <li><img src="{{asset('assets/images/ticket.png')}}" alt="">
-            <span>Tickets</span>
-        </li>
+        <li>
+        <a class="flex items-center" href="{{route('TicketsAdmin.index')}}">
+        <img src="{{asset('assets/images/ticket.png')}}"  alt="">
+        <span>Tickets</span>
+    </a>
 
         <li class="active">
         <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
@@ -46,9 +50,7 @@
 </a>
     </li>
 
-        <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Profile</span>
-    </li>
+
             </ul>
 
 

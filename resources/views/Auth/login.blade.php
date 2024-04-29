@@ -54,9 +54,6 @@
 
     </form>
 
-    <div class="google">
-        <p>Sign in using Google</p>
-    </div>
 
 
 </div>

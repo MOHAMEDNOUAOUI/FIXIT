@@ -57,17 +57,32 @@ class AdminController extends Controller
         return view ('admin.analytics.Subscriptions' , compact('Subscriptions' , 'metiers'));
     }
 
-    public function index_Customers() {
-        return view ('admin.customers.index');
-    }
+
 
     public function client_Customers () {
-        $clients = Client::with('user')->paginate(10);
+        $clients = Client::with('user.image')->paginate(10);
+
+        foreach($clients as $client){
+            if($client->user->image){
+                $imageData = $client->user->image->image;
+                $base46Image = base64_encode($imageData);
+                $client->user->image->base64 = $base46Image;
+            }
+        }
+
         return view('admin.customers.client' , compact('clients'));
     }
 
     public function depaneur_Customers () {
         $depanneurs = Depanneur::with(['user.image' , 'metiers'])->paginate(10);
+
+        foreach($depanneurs as $depanneur){
+            if($depanneur->user->image){
+                $imageData = $depanneur->user->image->image;
+                $base46Image = base64_encode($imageData);
+                $depanneur->user->image->base64 = $base46Image;
+            }
+        }
 
         return view('admin.customers.depaneur'  , compact('depanneurs'));
     }

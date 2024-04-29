@@ -21,6 +21,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotLoggedIn;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use PharIo\Manifest\AuthorCollectionIterator;
 
 Route::group(['prefix' => '/auth'], function () {
     Route::get('/login', [AuthController::class , 'Login'])->name("login")->middleware([RedirectIfAuthenticated::class]);
@@ -40,13 +41,13 @@ Route::middleware([ClientMiddleware::class ,'auth'])->group(function () {
     Route::get('/', [ClientController::class  , 'index'])->name('HOME');
     Route::get('/services' , [ClientController::class , 'services'])->name('client_services');
     Route::get('/appointements' , [ClientController::class , 'appointement'])->name('client_appointements');
+    Route::post('/reservation/rating' , [ServiceAppointementsController::class , 'ratingupdate'])->name('ratingupdate');
     Route::resource('reservation' , ServiceAppointementsController::class);
     Route::get('/support' , [ClientController::class , 'support'])->name('support');
     Route::get('/ticketshow' , [TicketController::class , 'ticketshow'])->name('ticketshow');
     Route::POST('/ticketsearch' , [TicketController::class , 'ticketsearch'])->name('ticketsearch');
     Route::resource('ticket' , TicketController::class);
     Route::resource('ticketanswer' , TicketAnswerController::class);
-    Route::resource('Rating' , DepanneurRatingsController::class);
 });
 
 
@@ -60,32 +61,36 @@ Route::middleware([AdminMiddleware::class , 'auth'])->group(function () {
 
 
     Route::post('Admin/Tickets' , [TicketController::class , 'filter'])->name('filter_tickets');
-    Route::resource('TicketsAdmin' , TicketController::class);
+    
 
 
     Route::get('/Admin/Analytics/Subscriptions' , [AdminController::class , 'index_Subscription'])->name('index_Subscription');
-    Route::get('/Admin/Customers/index' , [AdminController::class , 'index_Customers'])->name('index_Customers');
     Route::get('/Admin/Customers/client' , [AdminController::class , 'client_Customers'])->name('client_Customers');
     Route::get('/Admin/Customers/depaneur' , [AdminController::class , 'depaneur_Customers'])->name('depaneur_Customers');
     Route::get('/Admin/Profile' , [AdminController::class , 'profile'])->name('Admin_profile');
     Route::resource('Admin' , AdminController::class);
 
-
-
+    Route::get('/ticketshowadmin' , [TicketController::class , 'ticketshowadmin'])->name('ticketshowadmin');
+    Route::POST('/ticketsearchadmin' , [TicketController::class , 'ticketsearchadmin'])->name('ticketsearchadmin');
+    Route::get('/TicketsAdmin/Ticket/{id}' , [TicketController::class , 'ticketpage'])->name('ticketpage');
+    Route::resource('TicketsAdmin' , TicketController::class);
     Route::post('/search-banned', [UserController::class , 'searchBanned'])->name('search.banned');
+    Route::resource('ticketanswer' , TicketAnswerController::class);
     
 });
 
-Route::post('/locations', [LocationController::class, 'store'])
-    ->name('locations.store')
-    ->middleware('auth');
 
-    Route::get('/profile', [AuthController::class, 'profile'])
-    ->name('profile')
-    ->middleware('auth');
 
-    Route::resource('notification' , NotificationController::class)->middleware('auth');
-    Route::post('/reservation/filter' , [ServiceAppointementsController::class , 'filtering'])->name('filtering')->middleware('auth');
+    
+
+    Route::middleware('auth')->group(function() {
+        Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+        Route::post('/profileupdate/{id}' , [UserController::class , 'profileupdate'])->name('profileupdate');
+        Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
+        Route::resource('notification' , NotificationController::class);
+        Route::post('/reservation/filter' , [ServiceAppointementsController::class , 'filtering'])->name('filtering');
+    });
+
 
 Route::middleware([DepanneurMiddleware::class , 'auth'])->group(function () { 
     Route::post('/res/status' , [ServiceAppointementsController::class , 'statusupdate'])->name('statusupdate');

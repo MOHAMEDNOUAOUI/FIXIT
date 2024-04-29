@@ -26,9 +26,11 @@
         <span>Support</span>
     </li> -->
 
-    <li><img src="{{asset('assets/images/ticket.png')}}" alt="">
+    <li>
+        <a class="flex items-center" href="{{route('TicketsAdmin.index')}}">
+        <img src="{{asset('assets/images/ticket.png')}}"  alt="">
         <span>Tickets</span>
-    </li>
+    </a>
 
     <li>
         <a class="flex items-center" href="{{route('MetierAdmin.index')}}">
@@ -37,9 +39,7 @@
 </a>
     </li>
 
-    <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Profile</span>
-    </li>
+
         </ul>
 
 
@@ -49,7 +49,6 @@
         </div>
     </nav>
     <div class="bottom">
-    <h5><a href="{{route('index_Customers')}}">Overview</a></h5>
             <h5 class="active"><a href="{{route('client_Customers')}}">Clients</a></h5>
             <h5 ><a href="{{route('depaneur_Customers')}}">Deppaneur</a></h5>
     </div>
@@ -74,10 +73,7 @@
                     Email
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Location
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Status
+                    Phone
                 </th>
             </tr>
         </thead>
@@ -87,7 +83,7 @@
         @foreach($clients as $one)
         <tr class="userbag">
                     <td class="px-6 py-2">
-                            <div class="profilepic">
+                            <div class="profilepic" <div class="profilepic" style="background-position:center;background-size:cover;{{ isset($one->user->image->base64) ? 'background-image: url(data:image/png;base64,'.$one->user->image->base64.')' : 'background-color: grey;' }}">
                                 
                             </div>
                         </td>
@@ -98,10 +94,7 @@
                         {{$one->user->email}}
                         </td>
                         <td class="px-6 py-2 text-white">
-                            hay salam
-                        </td>
-                        <td class="px-6 py-2 text-white">
-                            {{$one->user->status}}
+                            {{$one->user->Phone}}
                         </td>
             </tr>
 

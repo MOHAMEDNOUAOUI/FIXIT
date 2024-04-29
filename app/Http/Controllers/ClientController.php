@@ -16,7 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->orderByDesc('created_at')->get();
 
         foreach($notifications as $notification){
             if ($notification->sendernot->image) {
@@ -31,7 +31,7 @@ class ClientController extends Controller
     }
 
     public function services() {
-        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->orderByDesc('created_at')->get();
 
         foreach($notifications as $notification){
             if ($notification->sendernot->image) {
@@ -51,7 +51,7 @@ class ClientController extends Controller
     }
 
     public function support() {
-        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+        $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->orderByDesc('created_at')->get();
 
         foreach($notifications as $notification){
             if ($notification->sendernot->image) {
@@ -69,7 +69,16 @@ class ClientController extends Controller
     public function appointement() {
 
 
-       $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->get();
+       $notifications = Notification::with(['recievernot.image' , 'sendernot.image'])->where('reciever' , Auth::id())->orderByDesc('created_at')->get();
+
+
+       foreach($notifications as $notification){
+        if ($notification->sendernot->image) {
+            $imageData = $notification->sendernot->image->image;
+            $base64Image = base64_encode($imageData);
+            $notification->sendernot->image->base64 = $base64Image;
+        }
+    }
 
         $clientId = Client::where('user_id' , Auth::id())->first();
       

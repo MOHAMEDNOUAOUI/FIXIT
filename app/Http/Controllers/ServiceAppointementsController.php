@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 use function Laravel\Prompts\select;
 
@@ -176,9 +177,49 @@ class ServiceAppointementsController extends Controller
      */
     public function update(Request $request, service_appointements $service_appointements)
     {
-        //
+
     }
 
+
+    public function ratingupdate (Request $request) {
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required|integer|between:1,5',
+            'appointe' => 'required', 
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $rating = $request->input('rating');
+        $appointeid = $request->input('appointe');
+
+        $appointement = service_appointements::where('id' , $appointeid)->first();
+
+        if ($appointement->Stars != null) {
+            return redirect()->back()->with('message', "You have Already Rated this Service with $rating star(s).");
+        }
+        $appointement->Stars = $request->input('rating');
+        $appointement->save();
+        
+
+        $clientNotificationMessage = "You have rated the service with $rating star(s). Thank you for your feedback!";
+        Notification::create([
+            'reciever' => $appointement->client->user->id,
+            'sender' => $appointement->depanneur->user->id,
+            'message' => $clientNotificationMessage,
+        ]);
+
+        $depanneurNotificationMessage = "A client has rated your service with $rating star(s).";
+        Notification::create([
+            'reciever' => $appointement->depanneur->user->id,
+            'sender' => $appointement->client->user->id,
+            'message' => $depanneurNotificationMessage,
+        ]);
+
+        return redirect()->back();
+
+    }
     /**
      * Remove the specified resource from storage.
      */

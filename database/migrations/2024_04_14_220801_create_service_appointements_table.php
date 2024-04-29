@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('service_type');
             $table->dateTime('appointment_date');
             $table->enum('status', ['pending', 'ongoing', 'paid'])->default('pending');
+            $table->tinyInteger('stars')->nullable();
             $table->timestamps();
         });
     }

@@ -17,7 +17,25 @@
 </head>
 <body>
     
-
+@if(session('message'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "{{ session('message') }}"
+        });
+    </script>
+@endif
 
 
 <div class="notificationcontainer">
@@ -87,13 +105,6 @@
                             <h2>APPOINTEMENTS</h2>
                         </a>
 
-                        <a class="in">
-                            <h2>ABOUT US</h2>
-                        </a>
-
-                        <a class="in">
-                            <h2>CONTACT US</h2>
-                        </a>
 
                         <a class="in" href="{{route('support')}}">
                             <h2>SUPPORT</h2>
@@ -152,6 +163,11 @@
       <div>
           <p><i class="fa-regular fa-calendar"></i> {{$appointe->appointment_date}}</p>
           <p>Service : {{$appointe->service_type}}</p>
+          <div class="stars">
+          @for($i = 1; $i <= $appointe->Stars; $i++)
+                <span>&#9733;</span>
+            @endfor
+          </div>
       </div>
     <div class="appprofile" data-image="{{ isset($appointe->depanneur->user->image->base64) ? $appointe->depanneur->user->image->base64 : '' }}" style="{{ isset($appointe->depanneur->user->image->base64) ? 'background-image: url(data:image/png;base64,'.$appointe->depanneur->user->image->base64.')' : 'background-color: grey;' }}"></div>
     </div>
@@ -188,6 +204,11 @@
       <div>
           <p><i class="fa-regular fa-calendar"></i> {{$appointe->appointment_date}}</p>
           <p>Service : {{$appointe->service_type}}</p>
+          <div class="stars">
+          @for($i = 1; $i <= $appointe->Stars; $i++)
+                <span>&#9733;</span>
+            @endfor
+          </div>
       </div>
     <div class="appprofile" data-image="{{ isset($appointe->depanneur->user->image->base64) ? $appointe->depanneur->user->image->base64 : '' }}" style="{{ isset($appointe->depanneur->user->image->base64) ? 'background-image: url(data:image/png;base64,'.$appointe->depanneur->user->image->base64.')' : 'background-color: grey;' }}"></div>
     </div>
@@ -224,6 +245,11 @@
       <div>
           <p><i class="fa-regular fa-calendar"></i> {{$appointe->appointment_date}}</p>
           <p>Service : {{$appointe->service_type}}</p>
+          <div class="stars">
+          @for($i = 1; $i <= $appointe->Stars; $i++)
+                <span>&#9733;</span>
+            @endfor
+          </div>
       </div>
     <div class="appprofile" data-image="{{ isset($appointe->depanneur->user->image->base64) ? $appointe->depanneur->user->image->base64 : '' }}" style="{{ isset($appointe->depanneur->user->image->base64) ? 'background-image: url(data:image/png;base64,'.$appointe->depanneur->user->image->base64.')' : 'background-color: grey;' }}"></div>
     </div>
@@ -317,10 +343,12 @@
         </div>
     </footer>
 
+  
 
 
 <script>
     const destroyNotificationUrl = "{{ route('notification.destroy', ['notification' => ':notificationId']) }}";
+
 </script>
 
 <script src="{{asset('js/notifications.js')}}"></script>
@@ -433,20 +461,18 @@ document.querySelectorAll('.appointement').forEach((element) => {
                                 </li>
 
 
-                                <li>
-                                    <h3>Rating</h3>
-
-                                    <form id="ratingStars" method="post" action="{{route('Rating.store')}}" class="rating">
+                                <li id="ratingLi" style="display: ${appointe.status === 'paid' ? 'block' : 'none'}">
+                                <h3>Rating</h3>
+                                <form id="ratingStars" method="post" action="{{ route('ratingupdate') }}" class="rating">
                                     @csrf
-                                        <button name="rating" class="star" value="1" data-rating="1">&#9733;</button>
-                                        <button name="rating" class="star" value="2" data-rating="2">&#9733;</button>
-                                        <button name="rating" class="star" value="3" data-rating="3">&#9733;</button>
-                                        <button name="rating" class="star" value="4" data-rating="4">&#9733;</button>
-                                        <button name="rating" class="star" value="5" data-rating="5">&#9733;</button>
-                                        <input value="${appointe.id}" name="appointe" type="hidden">
-                                     </form>
-
-                                </li>
+                                    <button name="rating" class="star" value="1" data-rating="1">&#9733;</button>
+                                    <button name="rating" class="star" value="2" data-rating="2">&#9733;</button>
+                                    <button name="rating" class="star" value="3" data-rating="3">&#9733;</button>
+                                    <button name="rating" class="star" value="4" data-rating="4">&#9733;</button>
+                                    <button name="rating" class="star" value="5" data-rating="5">&#9733;</button>
+                                    <input value="${appointe.id}" name="appointe" type="hidden">
+                                </form>
+                            </li>
                                 
                             </ul>
 

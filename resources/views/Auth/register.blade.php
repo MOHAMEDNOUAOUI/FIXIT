@@ -26,11 +26,9 @@
 
 
     <div class="google">
-            <div class="container"><p>Sing in with Google</p></div>
+
             <div class="or">
                 <div class="i"></div>
-                
-                <h2>OR</h2>
 
                 <div class="i"></div>
             </div>

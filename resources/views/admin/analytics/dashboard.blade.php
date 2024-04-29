@@ -18,7 +18,7 @@
             <span>Analytics</span></a>
         </li>
 
-    <li><a class="flex items-center" href="{{route('index_Customers')}}">
+    <li><a class="flex items-center" href="{{route('client_Customers')}}">
         <img src="{{asset('assets/images/customer.png')}}" alt="">
             <span>Customers</span></a>
         </li>
@@ -42,9 +42,7 @@
 </a>
     </li>
 
-    <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Profile</span>
-    </li>
+
         </ul>
 
 

@@ -18,7 +18,7 @@
             <span>Analytics</span></a>
         </li>
 
-        <li><a class="flex items-center" href="{{route('index_Customers')}}">
+        <li><a class="flex items-center" href="{{route('client_Customers')}}">
         <img src="{{asset('assets/images/customer.png')}}" alt="">
             <span>Customers</span></a>
         </li>
@@ -28,8 +28,12 @@
         <span>Support</span>
     </li> -->
 
-    <li><img src="{{asset('assets/images/ticket.png')}}" alt="">
+    <li>
+        <a class="flex items-center" href="{{route('TicketsAdmin.index')}}">
+        <img src="{{asset('assets/images/ticket.png')}}"  alt="">
         <span>Tickets</span>
+    </a>
+       
     </li>
 
     <li>
@@ -39,9 +43,7 @@
 </a>
     </li>
 
-    <li><img src="{{asset('assets/images/setting.png')}}" alt="">
-        <span>Profile</span>
-    </li>
+
         </ul>
 
 
@@ -68,7 +70,7 @@
 <p>The list has <span>{{$Subscriptions['Users']}}</span> User,<span>{{$Subscriptions['Depanneurs']}}</span> of them are Deppaneur</p>
 </div>
 
-<a href="{{route('index_Customers')}}">View List</a>
+<a href="{{route('client_Customers')}}">View List</a>
 </div>
 
 
