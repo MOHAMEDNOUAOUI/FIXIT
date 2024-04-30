@@ -93,9 +93,21 @@ class ServiceAppointementsController extends Controller
             $clientid = Client::where('user_id' , Auth::id())->first();
            
 
+
+            $service = service_appointements::where('client_id' , Auth::id())->where('service_type' , $metier->Metier)->where(function($query) {
+                $query->where('status' , 'pending')
+                ->orwhere('status' , 'ongoing');
+            })->first();
+
+            
+            if($service) {
+                return response()->json( 'You have Already Reserved');
+            }
+            
+
                 // Message sent successfully
                 service_appointements::create([
-                    'client_id' => $clientid->id,
+                    'client_id' => Auth::id(),
                     'depanneur_id' => $depanneurId->id,
                     'service_type' => $metier->Metier,
                 ]);
@@ -114,15 +126,13 @@ class ServiceAppointementsController extends Controller
                 
 
 
-                $success = true;
-                return response()->json(['success' => $success]);
+               
+                return response()->json(['success' => 'You Have Succefully reserved a service']);
 
             
         } else {
-            return response()->json( 'No users found.');
+            return response()->json( 'Sorry we couldnt find any depanneur closer to you.');
         }
-
-
 
     }
 

@@ -28,6 +28,7 @@ class DepanneurController extends Controller
         
         $TicketsCount = Ticket::where('user_id' , Auth::id())->count();
         $userinfo = User::with(['image', 'depanneur'])->where('id', Auth::id())->first();
+        
         if ($userinfo->image) {
             $imageData = $userinfo->image->image;
             $base64Image = base64_encode($imageData);
@@ -42,6 +43,8 @@ class DepanneurController extends Controller
 
         return view('Depaneur.index' , compact('ClientCount' , 'notifications' , 'DeppaneurCount' , 'TicketsCount' , 'userinfo' , 'servicecount' , 'RatingsCount'));
     }
+
+
 
     public function services(request $request) {
 

@@ -73,10 +73,17 @@ body .buttonscroll {
     position: fixed;
     right: 1rem;
     bottom: 2rem;
-    background-color: white;
-    height: 3rem;
-    width: 3rem;
+    background-color: var(--primary);
+    height: 2.5rem;
+    width: 2.5rem;
     z-index: 4000;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: 300ms ease;
+}
+
+.buttonscroll:hover {
+    transform: scale(1.1);
 }
 .bodyover {
     position: absolute;
@@ -2058,3 +2065,38 @@ gap: 0.6rem;
 	height: 2rem;
 	color: white;
 }
+
+
+
+
+
+
+
+
+
+.cards {
+    width: 90%;
+    height: auto;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: calc(97.1% / 3);
+    height: 260px;
+    background-color: rgba(50, 50, 50, 0.1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+}
+
+.card .img {
+    width: 100%;
+    height: 60%;
+    background-position: center;
+    background-size: cover;
+}
+

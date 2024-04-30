@@ -46,6 +46,7 @@ class ClientController extends Controller
             $query->where('status' , 'available');
         }])->paginate(3);
 
+
         
         return view('client.services' , compact('metier' , 'notifications'));
     }

@@ -221,6 +221,7 @@ document.querySelectorAll('#orderButton').forEach((element) => {
                 const response = JSON.parse(this.responseText);
 
 
+
                 if (response.success) {
             message = 'Your reservation was successfully submitted!';
             Swal.fire({
@@ -231,11 +232,10 @@ document.querySelectorAll('#orderButton').forEach((element) => {
   timer: 2500
 });
         } else {
-            message = 'Failed to submit reservation. Please try again later.';
             Swal.fire({
   position: "top-end",
   icon: "error",
-  title: message,
+  title: response,
   showConfirmButton: false,
   timer: 2500
 });

@@ -430,6 +430,14 @@
             });
             xhr.send(data);
         }
+
+
+
+        document.querySelector('.buttonscroll').addEventListener('click' , function() {
+            document.querySelector('#page1').scrollIntoView({
+                behavior:"smooth"
+            })
+        })
     </script>
 
     <script src="{{asset('js/notifications.js')}}"></script>

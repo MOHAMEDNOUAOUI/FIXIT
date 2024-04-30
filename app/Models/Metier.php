@@ -21,4 +21,6 @@ class Metier extends Model
     public function sous_metier() {
         return $this->hasMany(Sous_metier::class , 'Metier_id');
     }
+
+
 }
